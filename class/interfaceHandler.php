@@ -8,7 +8,7 @@
 define('appID','wx03393af10613da23');
 define('appsecret','40751854901cc489eddd055538224e8a');
 define('wexinId','gh_964192c927cb');
-$mypath=$_SERVER['DOCUMENT_ROOT'] . '/wechat';
+$mypath=$_SERVER['DOCUMENT_ROOT'] . '/xdsm';
 class interfaceHandler {
     public $currentToken='';
     public $gettedTime=0;

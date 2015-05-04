@@ -5,7 +5,7 @@
  * Date: 2015/4/25
  * Time: 10:07
  */
-$mypath=$_SERVER['DOCUMENT_ROOT'] . '/wechat';
+$mypath=$_SERVER['DOCUMENT_ROOT'] . '/xdsm';
 include_once $mypath . '/includes/magicquotes.inc.php';
 include_once $mypath . '/includes/db.inc.php';
 include_once $mypath . '/includes/helpers.inc.php';

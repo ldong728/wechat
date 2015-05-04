@@ -6,7 +6,7 @@
  * Time: 8:31
  */
 
-define("TOKEN", "godlee");
+define("TOKEN", "xdsm1234");
 
 class wechat
 {
@@ -14,16 +14,12 @@ class wechat
     {
         if (isset($_GET['echostr'])) {
             $echoStr = $_GET["echostr"];
-//            file_put_contents('log.txt', $echoStr, FILE_APPEND);
-            //valid signature , option
             if ($this->checkSignature()) {
                 echo $echoStr;
                 exit;
             }
         }
-//        file_put_contents('log.txt', "nothing ", FILE_APPEND);
-        echo 'connect ok';
-//        fclose($log);
+//        echo 'connect ok';
     }
 
 
@@ -34,7 +30,7 @@ class wechat
         if (!empty($rMsg['content'])) {
             echo $respnseStr;
         } else {
-            echo '??';
+            echo '???';
         }
     }
 

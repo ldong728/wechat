@@ -6,19 +6,20 @@
  * Date: 2015/4/17
  * Time: 8:38
  */
-$mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
+$mypath = $_SERVER['DOCUMENT_ROOT'] . '/xdsm';
 include_once $mypath . '/includes/magicquotes.inc.php';
 include_once $mypath . '/includes/db.inc.php';
 include_once $mypath . '/includes/xdsmdb.php';
 include_once $mypath . '/includes/helpers.inc.php';
 include_once $mypath . '/contrller/serveManager.php';
-include_once $mypath . '/class/wechat.php';
+include_once $mypath . '/class/xdsm.php';
 include_once $mypath . '/class/textHandler.php';
 include_once $mypath . '/class/jokeMaker.php';
 include_once $mypath . '/class/mobilePhoneQuery.php';
 
 
 $weObj = new wechat();
+$weObj->valid();
 $msg = $weObj->receiverFilter();
 //$userId = '';
 

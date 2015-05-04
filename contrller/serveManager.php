@@ -5,7 +5,7 @@
  * Date: 2015/4/21
  * Time: 14:15
  */
-$mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
+$mypath = $_SERVER['DOCUMENT_ROOT'] . '/xdsm';
 include_once $mypath . '/class/interfaceHandler.php';
 
 $mInterface = new interfaceHandler();
@@ -22,12 +22,12 @@ function deleteButton()
 function createButton()
 {
     $button1 = array('type' => 'click', 'name' => '讲个笑话', 'key' => 'abbcdsds');
-    $serchSubButton = array('type' => 'view', 'name' => 'js页面测试', 'url' => 'http://115.29.202.69/wechat/js');
-    $videoSubButton = array('type' => 'view', 'name' => '网页测试', 'url' => 'http://115.29.202.69/wechat');
-    $praiseSubButton = array('type' => 'click', 'name' => '会员卡页面测试', 'key' => 'cards');
+    $serchSubButton = array('type' => 'view', 'name' => 'js页面测试', 'url' => 'http://115.29.202.69/xdsm/js');
+    $videoSubButton = array('type' => 'view', 'name' => '网页测试', 'url' => 'http://115.29.202.69/xdsm');
+    $praiseSubButton = array('type' => 'click', 'name' => '会员卡', 'key' => 'cards');
     $button2 = array('name' => '链接跳转', 'sub_button' => array($serchSubButton, $videoSubButton, $praiseSubButton));
-    $button3 = array('type' => 'view', 'name' => '照片墙', 'url' => 'http://115.29.202.69/wechat/gallery');
-    $mainButton = array('button' => array($button1, $button2, $button3));
+    $button3 = array('type' => 'view', 'name' => '照片墙', 'url' => 'http://115.29.202.69/xdsm/gallery');
+    $mainButton = array('button' => array($praiseSubButton));
     $jsondata = json_encode($mainButton, JSON_UNESCAPED_UNICODE);
     echo $jsondata;
     $response = $GLOBALS['mInterface']->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' . $GLOBALS['mInterface']->currentToken, $jsondata);

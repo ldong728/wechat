@@ -1,5 +1,5 @@
 <?php
-$mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';   //用于直接部署
+$mypath = $_SERVER['DOCUMENT_ROOT'] . '/xdsm';   //用于直接部署
 include_once $mypath . '/includes/magicquotes.inc.php';
 include_once $mypath . '/includes/db.inc.php';
 include_once $mypath . '/includes/helpers.inc.php';
