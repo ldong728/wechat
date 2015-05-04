@@ -30,17 +30,11 @@ if ($msg['type'] == 'text') {
             $response = $joke->getJoke();
             break;
         }
-        case 'e':{
-            $phoneQuery= new mobilePhoneQuery();
-            $response=$phoneQuery->getPrice($msg['content']);
-                     $response=$response."\n".'只发个e字，我搜索起来很累的啊喂～～';
-            if($response=='以上价格仅供参考，以店面实际报价为准。')$response = '哦，呵呵，你高兴就好了';
-            break;
-        }
+
         default: {
             $phoneQuery= new mobilePhoneQuery();
             $response=$phoneQuery->getPrice($msg['content']);
-            if($response=='以上价格仅供参考，以店面实际报价为准。')$response = '哦，呵呵，你高兴就好了';
+            if($response=='以上价格仅供参考，以店面实际报价为准。')$response = '兄弟数码客服，为您服务';
             break;
         }
 
