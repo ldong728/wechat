@@ -105,7 +105,8 @@ class wechat
             }
             return $msg;
         }
-        return 'error';
+        echo 'error';
+        exit;
 
     }
 

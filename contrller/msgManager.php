@@ -19,10 +19,7 @@ include_once $mypath . '/class/mobilePhoneQuery.php';
 
 
 $weObj = new wechat();
-//$weObj->valid();
-//exit;
 $msg = $weObj->receiverFilter();
-//$userId = '';
 
 if ($msg['type'] == 'text') {
     switch ($msg['content']) {
@@ -31,8 +28,13 @@ if ($msg['type'] == 'text') {
             $response = $joke->getJoke();
             break;
         }
+//            case'手机'
 
         default: {
+        if(preg_match('/手机/',$msg['content'])){
+            $response='如要查询手机价格，请直接回复手机型号关键字，如“plus”、“5s”、“air”等';
+            break;
+        }
             $phoneQuery= new mobilePhoneQuery();
             $response=$phoneQuery->getPrice($msg['content']);
             if($response=='以上价格仅供参考，以店面实际报价为准。')$response = '兄弟数码客服，为您服务';

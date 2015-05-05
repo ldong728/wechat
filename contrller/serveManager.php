@@ -21,13 +21,13 @@ function deleteButton()
 
 function createButton()
 {
-    $button1 = array('type' => 'click', 'name' => '讲个笑话', 'key' => 'abbcdsds');
-    $serchSubButton = array('type' => 'view', 'name' => 'js页面测试', 'url' => 'http://115.29.202.69/xdsm/js');
-    $videoSubButton = array('type' => 'view', 'name' => '网页测试', 'url' => 'http://115.29.202.69/xdsm');
-    $praiseSubButton = array('type' => 'click', 'name' => '会员卡', 'key' => 'cards');
-    $button2 = array('name' => '链接跳转', 'sub_button' => array($serchSubButton, $videoSubButton, $praiseSubButton));
-    $button3 = array('type' => 'view', 'name' => '照片墙', 'url' => 'http://115.29.202.69/xdsm/gallery');
-    $mainButton = array('button' => array($praiseSubButton));
+    $button1 = array('type' => 'view', 'name' => '一键上网', 'url' => 'http://service.rippletek.com/Portal/Wx/login?weixin=cxxdsm');
+    $homePageSubButton = array('type' => 'view', 'name' => '微官网', 'url' => 'http://115.29.202.69/xdsm/index/index.php?homepage=1');
+    $mallSubButton = array('type' => 'view', 'name' => '网页测试', 'url' => 'http://115.29.202.69/xdsm/index/index.php?mall=1');
+    $cardsSubButton = array('type' => 'view', 'name' => '会员中心', 'url' => 'http://m.1ka1.cn/RecruitMember.aspx?SID=AQUAAAAAAAUVAAAAFpFJzybbPjb4RuuSI2wCAA%3d%3d&WeiXinId={wechat_id}');
+    $button2 = array('type'=>'view','name' => '店面地址', 'url' => 'http://115.29.202.69/xdsm/index/index.php?location=1');
+    $button3 = array('name' => '更多','sub_button'=>array($homePageSubButton,$mallSubButton,$cardsSubButton));
+    $mainButton = array('button' => array($button1,$button2,$button3));
     $jsondata = json_encode($mainButton, JSON_UNESCAPED_UNICODE);
     echo $jsondata;
     $response = $GLOBALS['mInterface']->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' . $GLOBALS['mInterface']->currentToken, $jsondata);
@@ -73,4 +73,10 @@ function getUnionId($openId){
     $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid='.$openId.'&lang=zh_CN';
     $jsonData=$GLOBALS['mInterface']->getByCurl($url);
     return json_decode($jsonData,true);;
+}
+function getButtonSituation(){
+    $url='https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN';
+    $jsonData=$GLOBALS['mInterface']->getByCurl($url);
+    file_put_contents($GLOBALS['mypath'].'/tmpfiles/buttonInf.dat',$jsonData);
+    return $jsonData;
 }

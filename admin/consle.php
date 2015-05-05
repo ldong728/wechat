@@ -59,10 +59,8 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
 
 
 
-    if (isset($_GET['modultest'])) {
-        echo 'train';
-        $temp = new trainQuery();
-        $str = $temp->getlist();
+    if (isset($_GET['modultest'])) { //模块测试
+        $str = getButtonSituation();
         output($str);
         exit;
     }
