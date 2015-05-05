@@ -1,6 +1,12 @@
-2015.05.04.10:00:45:  getTokenOnLine
-2015.05.04.10:00:45:  receive Content:   from: Don Li
-2015.05.04.10:01:42:  receive Content:   from: Don Li
-2015.05.04.10:02:00:  receive Content:   from: Don Li
-2015.05.04.10:02:29:  receive Content:   from: Don Li
-2015.05.04.10:02:35:  receive Content:   from: Don Li
+2015.05.05.09:08:30:  getTokenOnLine
+2015.05.05.09:41:31:  fetch!
+2015.05.05.09:44:04:  fetch!
+2015.05.05.09:44:24:  fetch!
+2015.05.05.09:44:24:  valid start
+2015.05.05.09:44:24:  echostr: 2742639144672830204
+2015.05.05.09:44:24:  fetch!
+2015.05.05.09:44:25:  valid start
+2015.05.05.09:47:56:  fetch!
+2015.05.05.09:47:56:  valid start
+2015.05.05.09:50:38:  fetch!
+2015.05.05.09:50:38:  valid start

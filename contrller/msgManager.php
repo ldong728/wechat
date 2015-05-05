@@ -12,14 +12,15 @@ include_once $mypath . '/includes/db.inc.php';
 include_once $mypath . '/includes/xdsmdb.php';
 include_once $mypath . '/includes/helpers.inc.php';
 include_once $mypath . '/contrller/serveManager.php';
-include_once $mypath . '/class/xdsm.php';
+include_once $mypath . '/class/wechat.php';
 include_once $mypath . '/class/textHandler.php';
 include_once $mypath . '/class/jokeMaker.php';
 include_once $mypath . '/class/mobilePhoneQuery.php';
 
 
 $weObj = new wechat();
-$weObj->valid();
+//$weObj->valid();
+//exit;
 $msg = $weObj->receiverFilter();
 //$userId = '';
 
@@ -44,13 +45,13 @@ if ($msg['type'] == 'text') {
 }
 if ($msg['type'] == 'event') {
     if ($msg['EventKey'] == 'abbcdsds') {
-//        wxlog('getTheEventKey=' . $msg['EventKey']);
         $joke = new jokeMaker();
         $response = $joke->getJoke();
         $echoStr = $weObj->prepareMsg($msg['from'], $msg['me'], 'text', $response);
         echo $echoStr;
     }
     if($msg['EventKey']=='cards'){
+
         $content = 'http://m.1ka1.cn/RecruitMember.aspx?SID=AQUAAAAAAAUVAAAAFpFJzybbPjb4RuuSI2wCAA%3d%3d&WeiXinId=';
         $content=$content.$msg['from'];
 //        $temp = getUnionId($msg['from']);

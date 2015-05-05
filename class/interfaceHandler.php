@@ -5,9 +5,9 @@
  * Date: 2015/4/17
  * Time: 8:21
  */
-define('appID','wx03393af10613da23');
-define('appsecret','40751854901cc489eddd055538224e8a');
-define('wexinId','gh_964192c927cb');
+define('appID','wx0fe280bfdea0083c');
+define('appsecret','49e1178d8a8e6d4e840434c3e1c9bd5a');
+define('wexinId','cxxdsm');
 $mypath=$_SERVER['DOCUMENT_ROOT'] . '/xdsm';
 class interfaceHandler {
     public $currentToken='';
