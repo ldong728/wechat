@@ -59,12 +59,10 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
 
 
 
-    if (isset($_GET['modultest'])) {
-        echo 'train';
-        $temp = new trainQuery();
-        $str = $temp->getlist();
-        output($str);
-        exit;
+    if (isset($_GET['modultest'])) {//功能测试块
+        $str = 'http://www.abcdefg.com/yes.php?hoho=1&nono=2';
+        $str=urlencode($str);
+        echo $str;
     }
 
 

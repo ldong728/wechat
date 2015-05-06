@@ -9,9 +9,10 @@ require_once $mypath.'/class/jssdk.php';
 $jssdk = new JSSDK();
 $signPackage = $jssdk->GetSignPackage();
 
-//include 'view.html.php'
-include 'draw.html';
+include 'view.html.php'
+//include 'draw.html';
 //header('location: draw.html');
+
 ?>
 
 
