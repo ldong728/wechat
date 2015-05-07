@@ -46,6 +46,11 @@ function createNewKF($account_name, $name, $psw)
     return $data;
 
 }
+function getAllKFInf(){ //获取所有客服信息
+    $geturl='https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token=ACCESS_TOKEN';
+    $data = $GLOBALS['mInterface']->getByCurl($geturl);
+    return $data;
+}
 
 function uploadTempMedia($file, $type)
 {
@@ -79,4 +84,9 @@ function getButtonSituation(){
     $jsonData=$GLOBALS['mInterface']->getByCurl($url);
     file_put_contents($GLOBALS['mypath'].'/tmpfiles/buttonInf.dat',$jsonData);
     return $jsonData;
+}
+function sendMsg($json_data){
+    $url='https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN';
+    $GLOBALS['mInterface']-> postJsonByCurl($url,$json_data);
+//    wxlog($json_data);
 }

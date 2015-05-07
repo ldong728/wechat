@@ -21,39 +21,10 @@ class wechat
                 exit;
             }
         }
-//        echo 'connect ok';
     }
 
 
-    public function responseMsg($con)
-    {
-        $rMsg = $this->receiveMsg();
-        $respnseStr = $this->prepareMsg($rMsg['from'], $rMsg['me'], 'text', $con);
-        if (!empty($rMsg['content'])) {
-            echo $respnseStr;
-        } else {
-            echo '???';
-        }
-    }
 
-    public function receiveMsgBack()
-    {// 已过期
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-
-        //extract post data
-        if (!empty($postStr)) {
-            /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
-               the best way is to check the validity of xml by yourself */
-            libxml_disable_entity_loader(true);
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $msg['from'] = $postObj->FromUserName;
-            $msg['me'] = $postObj->ToUserName;
-            $msg['type'] = $postObj->MsgType;
-            $msg['picUrl'] = $postObj->PicUrl;
-            $msg['content'] = trim($postObj->Content);
-            return $msg;
-        }
-    }
 
     public function receiverFilter()
     {
@@ -110,20 +81,31 @@ class wechat
 
     }
 
-    public function prepareMsg($sentTo, $me, $msgType, $content)
+    public function prepareTextMsg($sentTo, $me, $content)
     {
         $time = time();
         $textTpl = "<xml>
 							<ToUserName><![CDATA[%s]]></ToUserName>
 							<FromUserName><![CDATA[%s]]></FromUserName>
 							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[%s]]></MsgType>
+							<MsgType><![CDATA[text]]></MsgType>
 							<Content><![CDATA[%s]]></Content>
-							<FuncFlag>0</FuncFlag>
 							</xml>";
-        $resultStr = sprintf($textTpl, $sentTo, $me, $time, $msgType, $content);
+        $resultStr = sprintf($textTpl, $sentTo, $me, $time, $content);
         return $resultStr;
     }
+    public function prepareToKFMsg($sentTo,$me){
+        $time = time();
+        $textTpl = "<xml>
+							<ToUserName><![CDATA[%s]]></ToUserName>
+							<FromUserName><![CDATA[%s]]></FromUserName>
+							<CreateTime>%s</CreateTime>
+							<MsgType><![CDATA[transfer_customer_service]]></MsgType>
+							</xml>";
+        $resultStr = sprintf($textTpl, $sentTo, $me, $time);
+        return $resultStr;
+    }
+
 
     private function checkSignature()
     {
@@ -157,42 +139,4 @@ class wechat
         else return false;
     }
 
-    public function responseMsgBackup($response)  //sample 已过时
-    {
-//        file_put_contents('log.txt','getTheMsg ',FILE_APPEND);
-        //get post data, May be due to the different environments
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-
-        //extract post data
-        if (!empty($postStr)) {
-            /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
-               the best way is to check the validity of xml by yourself */
-            libxml_disable_entity_loader(true);
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $fromUsername = $postObj->FromUserName;
-            $toUsername = $postObj->ToUserName;
-            $keyword = trim($postObj->Content);
-            $time = time();
-            $textTpl = "<xml>
-							<ToUserName><![CDATA[%s]]></ToUserName>
-							<FromUserName><![CDATA[%s]]></FromUserName>
-							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[%s]]></MsgType>
-							<Content><![CDATA[%s]]></Content>
-							<FuncFlag>0</FuncFlag>
-							</xml>";
-            if (!empty($keyword)) {
-                $msgType = "text";
-                $contentStr = $response;
-                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                echo $resultStr;
-            } else {
-                echo "Input something...";
-            }
-
-        } else {
-            echo "";
-            exit;
-        }
-    }
 }

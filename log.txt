@@ -1,20 +1,7 @@
-2015.05.06.13:11:23:  getTokenOnLine
-2015.05.06.13:11:23:  receive Content:   from: 峰立机械
-2015.05.06.13:11:34:  receive Content: 你好  from: 峰立机械
-2015.05.06.13:12:17:  receive Content: 苹果老是退出程序  from: 峰立机械
-2015.05.06.13:12:25:  receive Content: 怎么回事？  from: 峰立机械
-2015.05.06.13:12:41:  receive Content: 有人吗  from: 峰立机械
-2015.05.06.13:15:49:  receive Content:   from: 峰立机械
-2015.05.06.13:15:55:  receive Content:   from: 峰立机械
-2015.05.06.19:56:47:  getTokenOnLine
-2015.05.06.19:56:47:  receive Content:   from: 
-2015.05.06.23:33:22:  getTokenOnLine
-2015.05.06.23:33:23:  receive Content:   from: @韩哥■●★
-2015.05.06.23:42:20:  receive Content:   from: ㄨ╭丶(只 为 一 人)丶╮
-2015.05.06.23:48:29:  receive Content:   from: 
-2015.05.07.09:06:41:  getTokenOnLine
-2015.05.07.09:08:12:  receive Content:   from: Don Li
-2015.05.07.09:08:14:  get jsapiTicketOnLine
-2015.05.07.09:11:53:  receive Content:   from: Don Li
-2015.05.07.09:11:53:  get location
-2015.05.07.09:11:53:  location done
+2015.05.07.14:56:10:  get jsapiTicketOnLine
+2015.05.07.14:57:48:  receive Content: ipad  from: Don Li
+2015.05.07.14:59:12:  receive Content: 手机  from: Don Li
+2015.05.07.15:00:57:  receive Content: ipad  from: Don Li
+2015.05.07.15:56:30:  {"touser":"oe1xGuKgyV83VyKPKTwWx6jxvNKw","msgtype":"text","text":{"content":"您好，您输入的内容系统无法识别，已转接至人工客服，请稍候"}}
+2015.05.07.15:56:30:  receive Content: 呵呵  from: Don Li
+2015.05.07.15:59:27:  receive Content: mini  from: Don Li

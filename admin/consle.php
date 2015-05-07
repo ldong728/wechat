@@ -60,8 +60,15 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
 
 
     if (isset($_GET['modultest'])) { //模块测试
-        $str = getButtonSituation();
-        output($str);
+//        $d=getAllKFInf();
+
+//        echo $d;
+        $json_str='{"from":{"0":"oe1xGuKgyV83VyKPKTwWx6jxvNKw"},"me":{"0":"gh_578ec12b4614"},"type":{"0":"text"},"msgId":{"0":"6145970747626711230"},"content":"\u554a\u554a\u554a"}';
+        $msg=json_decode($json_str,true);
+        echo $msg['from'][0];
+        $list = array('touser'=>$msg['from'][0],'type'=>'type');
+        $json=json_encode($list);
+        echo $json;
         exit;
     }
 

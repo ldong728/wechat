@@ -7,11 +7,9 @@ require_once $mypath.'/class/jssdk.php';
 
 
 if(isset($_GET['location'])){
-    wxlog('get location');
     $jssdk = new JSSDK();
     $signPackage = $jssdk->GetSignPackage();
     include 'location.html.php';
-    wxlog('location done');
     exit;
 }
 
