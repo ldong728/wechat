@@ -19,6 +19,7 @@ include_once $mypath . '/class/mobilePhoneQuery.php';
 
 
 $weObj = new wechat();
+$weObj->valid();
 $msg = $weObj->receiverFilter();
 
 if ($msg['type'] == 'text') {

@@ -14,7 +14,6 @@ class wechat
     {
 //        wxlog('valid start');
         if (isset($_GET['echostr'])) {
-            wxlog('echostr: '.$_GET['echostr']);
             $echoStr = $_GET["echostr"];
             if ($this->checkSignature()) {
                 echo $echoStr;
