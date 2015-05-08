@@ -26,6 +26,8 @@ if ($msg['type'] == 'text') {
         case '笑话': {
             $joke = new jokeMaker();
             $response = $joke->getJoke();
+            $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'], $response);
+            echo $echoStr;
             break;
         }
 //            case'手机'
