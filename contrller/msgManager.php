@@ -6,6 +6,7 @@
  * Date: 2015/4/17
  * Time: 8:38
  */
+
 $mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 include_once $mypath . '/includes/magicquotes.inc.php';
 include_once $mypath . '/includes/db.inc.php';
@@ -13,13 +14,14 @@ include_once $mypath . '/includes/xdsmdb.php';
 include_once $mypath . '/includes/helpers.inc.php';
 include_once $mypath . '/contrller/serveManager.php';
 include_once $mypath . '/class/wechat.php';
-include_once $mypath . '/class/textHandler.php';
 include_once $mypath . '/class/jokeMaker.php';
 include_once $mypath . '/class/mobilePhoneQuery.php';
 
-
+wxlog('get msg');
 $weObj = new wechat();
+$weObj->valid();
 $msg = $weObj->receiverFilter();
+wxlog('filter return ok content:'. $msg['content']);
 //$userId = '';
 
 if ($msg['type'] == 'text') {
@@ -44,7 +46,8 @@ if ($msg['type'] == 'text') {
         }
 
     }
-    $echoStr = $weObj->prepareMsg($msg['from'], $msg['me'], 'text', $response);
+    $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'], $response);
+    wxlog($echoStr);
     echo $echoStr;
 }
 if ($msg['type'] == 'event') {
@@ -52,7 +55,7 @@ if ($msg['type'] == 'event') {
 //        wxlog('getTheEventKey=' . $msg['EventKey']);
         $joke = new jokeMaker();
         $response = $joke->getJoke();
-        $echoStr = $weObj->prepareMsg($msg['from'], $msg['me'], 'text', $response);
+        $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'], $response);
         echo $echoStr;
     }
     if($msg['EventKey']=='cards'){
@@ -65,7 +68,7 @@ if ($msg['type'] == 'event') {
 //            $content=$content.$k.':  '.$v."\n";
 //        }
 
-        $echoStr = $weObj->prepareMsg($msg['from'], $msg['me'], 'text', $content);
+        $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'], $content);
         echo $echoStr;
     }
 
@@ -73,7 +76,7 @@ if ($msg['type'] == 'event') {
 if ($msg['type'] == 'image') {
     $filePath = downloadImgToHost($msg['MediaId']);
     pdoInsert('upload_tbl', array('user_id' => $msg['from'], 'media_id' => $msg['MediaId'], 'file_path' => $filePath));
-    $echoStr = $weObj->prepareMsg($msg['from'], $msg['me'], 'text', '图片收到了');
+    $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'],  '图片收到了');
     echo $echoStr;
 }
 if(!isset($userId)){

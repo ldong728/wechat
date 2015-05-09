@@ -22,7 +22,7 @@ function deleteButton()
 function createButton()
 {
     $button1 = array('type' => 'click', 'name' => '讲个笑话', 'key' => 'abbcdsds');
-    $serchSubButton = array('type' => 'view', 'name' => 'js页面测试', 'url' => 'http://115.29.202.69/wechat/js');
+    $serchSubButton = array('type' => 'view', 'name' => 'js接口测试', 'url' => 'http://115.29.202.69/wechat/js');
     $videoSubButton = array('type' => 'view', 'name' => '网页测试', 'url' => 'http://115.29.202.69/wechat');
     $praiseSubButton = array('type' => 'click', 'name' => '会员卡页面测试', 'key' => 'cards');
     $button2 = array('name' => '链接跳转', 'sub_button' => array($serchSubButton, $videoSubButton, $praiseSubButton));

@@ -1,4 +1,5 @@
 <?php
+define('DEBUG',true);
 function html($text)
 {
 	return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
@@ -36,8 +37,10 @@ function printInf($p,$g,$s){
     }
 }
 function wxlog($str){
-    $log=date('Y.m.d.H:i:s',time()).':  '.$str."\n";
-    file_put_contents($GLOBALS['mypath'].'/log.txt',$log,FILE_APPEND);
+    if(DEBUG) {
+        $log = date('Y.m.d.H:i:s', time()) . ':  ' . $str . "\n";
+        file_put_contents($GLOBALS['mypath'] . '/log.txt', $log, FILE_APPEND);
+    }
 }
 
 function mytest($s){

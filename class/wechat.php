@@ -14,7 +14,6 @@ class wechat
     {
 //        wxlog('valid start');
         if (isset($_GET['echostr'])) {
-            wxlog('echostr: '.$_GET['echostr']);
             $echoStr = $_GET["echostr"];
             if ($this->checkSignature()) {
                 echo $echoStr;
@@ -28,7 +27,9 @@ class wechat
 
     public function receiverFilter()
     {
-        if ($this->validMsg()) {
+        wxlog('start filt');
+//        if ($this->validMsg()) {
+            wxlog('msg valid ok');
             $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
             if (!empty($postStr)) {
                 /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
@@ -39,6 +40,7 @@ class wechat
                 $msg['me'] = $postObj->ToUserName;
                 $msg['type'] = $postObj->MsgType;
                 $msg['msgId'] = $postObj->MsgId;
+                wxlog('basic msginf ok,type: '.$msg['type']);
                 switch ($msg['type']) {
                     case 'text': {
                         $msg['content'] = trim($postObj->Content);
@@ -75,9 +77,9 @@ class wechat
                 }
             }
             return $msg;
-        }
-        echo 'error';
-        exit;
+//        }
+//        echo 'error';
+//        exit;
 
     }
 
