@@ -28,8 +28,8 @@ class wechat
     public function receiverFilter()
     {
         wxlog('start filt');
-//        if ($this->validMsg()) {
-            wxlog('msg valid ok');
+        if ($this->validMsg()) {
+//            wxlog('msg valid ok');
             $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
             if (!empty($postStr)) {
                 /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
@@ -77,9 +77,9 @@ class wechat
                 }
             }
             return $msg;
-//        }
-//        echo 'error';
-//        exit;
+        }
+        echo 'error';
+        exit;
 
     }
 

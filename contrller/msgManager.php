@@ -76,7 +76,7 @@ if ($msg['type'] == 'event') {
 if ($msg['type'] == 'image') {
     $filePath = downloadImgToHost($msg['MediaId']);
     pdoInsert('upload_tbl', array('user_id' => $msg['from'], 'media_id' => $msg['MediaId'], 'file_path' => $filePath));
-    $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'],  '图片收到了');
+    $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'],  '图片收到了,已放入照片墙');
     echo $echoStr;
 }
 if(!isset($userId)){

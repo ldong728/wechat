@@ -6,8 +6,9 @@ include_once $mypath . '/includes/helpers.inc.php';
 wxlog('fetch');
 include $mypath.'/contrller/msgManager.php';
 
-
-
+//include 'wx_sample.php';
+//$wx = new wechatCallbackapiTest();
+//$wx->responseMsg();
 
 
 ?>

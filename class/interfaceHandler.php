@@ -1,13 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: godlee
- * Date: 2015/4/17
- * Time: 8:21
- */
+
+//测试号：
 define('appID','wx03393af10613da23');
 define('appsecret','40751854901cc489eddd055538224e8a');
 define('wexinId','gh_964192c927cb');
+//个人公众号：
+//define('appID','wx8426b63b5ce8c518');
+//define('appsecret','451129432c9ebe8fb74d0ac1a3926e3e');
+//define('wexinId','myBrainHole');
 $mypath=$_SERVER['DOCUMENT_ROOT'] . '/wechat';
 class interfaceHandler {
     public $currentToken='';
