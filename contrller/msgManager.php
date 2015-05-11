@@ -6,7 +6,7 @@
  * Date: 2015/4/17
  * Time: 8:38
  */
-$mypath = $_SERVER['DOCUMENT_ROOT'] . '/xdsm';
+$mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 include_once $mypath . '/includes/magicquotes.inc.php';
 include_once $mypath . '/includes/db.inc.php';
 include_once $mypath . '/includes/xdsmdb.php';
@@ -84,8 +84,8 @@ if ($msg['type'] == 'event') {
 
 }
 if ($msg['type'] == 'image') {
-    $filePath = downloadImgToHost($msg['MediaId']);
-    pdoInsert('upload_tbl', array('user_id' => $msg['from'], 'media_id' => $msg['MediaId'], 'file_path' => $filePath));
+//    $filePath = downloadImgToHost($msg['MediaId']);
+//    pdoInsert('upload_tbl', array('user_id' => $msg['from'], 'media_id' => $msg['MediaId'], 'file_path' => $filePath));
     $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'], '图片收到了');
     echo $echoStr;
 }

@@ -7,7 +7,7 @@
  */
 //include_once 'interfaceHandler.php';
 
-$mypath=$_SERVER['DOCUMENT_ROOT'] . '/xdsm';
+$mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 class jokeMaker {
 //    private $joke;
 

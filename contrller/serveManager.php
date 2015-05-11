@@ -5,7 +5,7 @@
  * Date: 2015/4/21
  * Time: 14:15
  */
-$mypath = $_SERVER['DOCUMENT_ROOT'] . '/xdsm';
+$mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 include_once $mypath . '/class/interfaceHandler.php';
 
 $mInterface = new interfaceHandler();

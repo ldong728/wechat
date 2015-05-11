@@ -5,7 +5,7 @@
  * Date: 2015/4/29
  * Time: 17:56
  */
-$mypath = $_SERVER['DOCUMENT_ROOT'] . '/xdsm';
+$mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 include_once $mypath . '/includes/xdsmdb.php';
 
 class mobilePhoneQuery

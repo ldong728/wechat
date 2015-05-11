@@ -1,5 +1,5 @@
 <?php
-$mypath=$_SERVER['DOCUMENT_ROOT'] . '/xdsm';
+$mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 require_once $mypath.'/class/interfaceHandler.php';
 class JSSDK {
 

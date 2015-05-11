@@ -1,5 +1,5 @@
 <?php
-$mypath = $_SERVER['DOCUMENT_ROOT'] . '/xdsm';
+$mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 $myurl = 'http://115.29.202.69/xdsm';
 include_once $mypath . '/includes/magicquotes.inc.php';
 include_once $mypath . '/includes/db.inc.php';
