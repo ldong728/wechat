@@ -22,9 +22,11 @@ function deleteButton()
 function createButton()
 {
     $button1 = array('type' => 'view', 'name' => '一键上网', 'url' => 'http://service.rippletek.com/Portal/Wx/login?weixin=cxxdsm');
-    $homePageSubButton = array('type' => 'view', 'name' => '微官网', 'url' => 'http://115.29.202.69/xdsm/index/index.php?homepage=1');
-    $mallSubButton = array('type' => 'view', 'name' => '网页测试', 'url' => 'http://115.29.202.69/xdsm/index/index.php?mall=1');
-    $cardsSubButton = array('type' => 'view', 'name' => '会员中心', 'url' => 'http://m.1ka1.cn/RecruitMember.aspx?SID=AQUAAAAAAAUVAAAAFpFJzybbPjb4RuuSI2wCAA%3d%3d&WeiXinId={wechat_id}');
+    $homePageSubButton = array('type' => 'view', 'name' => '微官网', 'url' => 'http://www.xdsm.net/wechat/index/index.php?homepage=1');
+    $mallSubButton = array('type' => 'view', 'name' => '网页测试', 'url' => 'http://www.xdsm.net/wechat/index/index.php?mall=1');
+    $cardsSubButton = array('type' => 'view', 'name' => '会员中心', 'url' => 'https://open.weixin.qq.com/connect/oauth2/authorize?
+    appid='.appID.'&redirect_uri=http%3A%2F%2Fwww.xdsm.net%2Fwechat%2Findex%2Findex.php
+    &response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect');
     $button2 = array('type'=>'view','name' => '店面地址', 'url' => 'http://115.29.202.69/xdsm/index/index.php?location=1');
     $button3 = array('name' => '更多','sub_button'=>array($homePageSubButton,$mallSubButton,$cardsSubButton));
     $mainButton = array('button' => array($button1,$button2,$button3));
@@ -89,4 +91,14 @@ function sendMsg($json_data){
     $url='https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN';
     $GLOBALS['mInterface']-> postJsonByCurl($url,$json_data);
 //    wxlog($json_data);
+}
+function authorize($code){
+    $getTokenUrl='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.appID.'&secret='.appsecret.'&code='.$code.'&grant_type=authorization_code';
+    $inf = $GLOBALS['mInterface']->getByCurl($getTokenUrl);
+    return $inf;
+}
+function getUserInfFromAuthorze($accessToken,$openId){
+    $url='https://api.weixin.qq.com/sns/userinfo?access_token='.$accessToken.'&openid='.$openId.'&lang=zh_CN';
+    $inf=$GLOBALS['mInterface']->getByCurl($url);
+    return $inf;
 }

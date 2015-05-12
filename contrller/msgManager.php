@@ -19,6 +19,7 @@ include_once $mypath . '/class/mobilePhoneQuery.php';
 
 
 $weObj = new wechat();
+$weObj->valid();
 $msg = $weObj->receiverFilter();
 
 if ($msg['type'] == 'text') {
@@ -90,6 +91,7 @@ if ($msg['type'] == 'image') {
     echo $echoStr;
 }
 if (!isset($userId)) {
-    $userId = getUnionId($msg['from'])['nickname'];
+    $userInf = getUnionId($msg['from']);
+    $userId=$userInf['nickname'];
 }
 wxlog('receive Content: ' . $msg['content'] . '  from: ' . $userId);

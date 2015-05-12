@@ -6,7 +6,6 @@ include_once $mypath.'/includes/xdsmdb.php';
 include_once $mypath . '/includes/helpers.inc.php';
 include_once $mypath.'/contrller/serveManager.php';
 include_once $mypath.'/class/mobilePhoneQuery.php';
-include_once $mypath.'/class/trainQuery.php';
 session_start();
 if(isset($_SESSION['login'])&&$_SESSION['login']) {
 
@@ -60,15 +59,9 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
 
 
     if (isset($_GET['modultest'])) { //模块测试
-//        $d=getAllKFInf();
+        $data=urlencode('http://www.xdsm.net/wechat/index/index.php');
+        echo $data;
 
-//        echo $d;
-        $json_str='{"from":{"0":"oe1xGuKgyV83VyKPKTwWx6jxvNKw"},"me":{"0":"gh_578ec12b4614"},"type":{"0":"text"},"msgId":{"0":"6145970747626711230"},"content":"\u554a\u554a\u554a"}';
-        $msg=json_decode($json_str,true);
-        echo $msg['from'][0];
-        $list = array('touser'=>$msg['from'][0],'type'=>'type');
-        $json=json_encode($list);
-        echo $json;
         exit;
     }
 
