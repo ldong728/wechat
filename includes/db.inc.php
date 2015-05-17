@@ -1,4 +1,5 @@
 <?php
+include_once $mypath.'/includes/helpers.inc.php';
 try
 {
   $pdo = new PDO('mysql:host=localhost;dbname=test_db', 'godlee', 'godlee1394');
@@ -54,6 +55,7 @@ function pdoQuery($tableName, $fields, $where, $append)
     if($append!=null){
         $sql=$sql.' '.$append;
     }
+//    wxlog('sql:'.$sql);
 //    echo $sql;
 //    exit;
     try {
@@ -91,6 +93,7 @@ function pdoInsert($tableName,$value){
         if ($j < $valueCount - 1) $sql = $sql . ',';
         $j++;
     }
+//    wxlog('sql:'.$sql);
 //    echo $sql;
 //    exit;
     try {
