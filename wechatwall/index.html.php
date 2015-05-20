@@ -7,6 +7,9 @@
     <script>
         var FONT_SIZE = 20;
         var ICON_SIZE = 50;
+        var TEXT_LEGNTH=10;
+        var MARGINS=20; //文字与背景框的边距
+        var backGround;
         var myCanvas;
         var myContext;
         var currentId = -1;
@@ -14,7 +17,12 @@
         var height;
         $(document).ready(function () {
             initCanvas();
-            setInterval(reflashMsg, 3000);
+            backGround=new Image();
+            backGround.src='resource/background.png';
+//            backGround.onload=function(){
+                setInterval(reflashMsg, 3000);
+//            });
+
         });
         $(window).resize(initCanvas);
         function resizeCanvas(){
@@ -42,14 +50,17 @@
         function displayMsg(msgList) {
             var list = eval(msgList);
             $.each(list, function (id, value) {
-
-                var x = rnd(10, width-50);
-                var y = rnd(10, height-50.);
+                var formedText=cutText(value.content);
+                var bgwidth = (formedText.length>1? FONT_SIZE*TEXT_LEGNTH+MARGINS*2: formedText[0].length*FONT_SIZE+MARGINS*2);
+                var bgheight = formedText.length*(FONT_SIZE+5)+MARGINS;
+                var x = rnd(10, width-bgwidth-ICON_SIZE);
+                var y = rnd(10, height-bgheight);
                 if(currentId<value.id)currentId = value.id;
                 var icon = new Image();
                 icon.src = value.user_icon;
-//                myContext.fillText(value.content, x + 55, y + 25);
-                drawFormatedText(cutText(value.content,10),x+ICON_SIZE+5,y+FONT_SIZE);
+
+                myContext.drawImage(backGround,x+ICON_SIZE,y,bgwidth,bgheight);
+                drawFormatedText(formedText,x+ICON_SIZE+15,y+FONT_SIZE);
                 icon.onload = function () {
                     myContext.drawImage(icon, x, y, ICON_SIZE,ICON_SIZE);
                 }
@@ -60,9 +71,9 @@
                 myContext.fillText(textArray[i],x,i*(FONT_SIZE+5)+y);
             }
         }
-        function cutText(str,slength){
+        function cutText(str){
             var length=str.length;
-            var time=length/slength;
+            var time=length/TEXT_LEGNTH;
             var textarray=new Array();
             if(time<1){
                 textarray.push(str);
@@ -70,7 +81,7 @@
             }
               else{
                 for(var x=0;x<time;x++){
-                    textarray.push(str.substring(x*slength,(x+1)*slength));
+                    textarray.push(str.substring(x*TEXT_LEGNTH,(x+1)*TEXT_LEGNTH));
                 }
             }
             return textarray;
