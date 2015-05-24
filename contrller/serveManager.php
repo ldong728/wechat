@@ -8,21 +8,27 @@
 $mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 include_once $mypath . '/class/interfaceHandler.php';
 
-$mInterface = new interfaceHandler();
+$ready = false;
+if(isset($_SESSION['weixinId'])){
+    $mInterface = new interfaceHandler($_SESSION['weixinId']);
+    $ready=true;
+}
 
 
-function deleteButton()
+function deleteButton($weixinId=0)
 {
-    $data = $GLOBALS['mInterface']->sendGet('https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=' . $GLOBALS['mInterface']->currentToken);
+    $itfc=($GLOBALS['ready']?$GLOBALS['mInterface']: new interfaceHandler($weixinId));
+    $data = $itfc->sendGet('https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN');
     echo $data;
     echo 'delete ok';
     wxlog('delete all button');
 }
 
-function createButton()
+function createButton($weixinId=0)
 {
+    $itfc=($GLOBALS['ready']?$GLOBALS['mInterface']: new interfaceHandler($weixinId));
     $button1 = array('type' => 'click', 'name' => '讲个笑话', 'key' => 'abbcdsds');
-    $serchSubButton = array('type' => 'view', 'name' => 'js接口测试', 'url' => 'http://115.29.202.69/wechat/js');
+    $serchSubButton = array('type' => 'view', 'name' => 'js接口测试', 'url' => 'http://115.29.202.69/wechat/js?weixin_id='.$itfc->weixinId);
     $videoSubButton = array('type' => 'view', 'name' => '网页测试', 'url' => 'http://115.29.202.69/wechat');
     $praiseSubButton = array('type' => 'click', 'name' => '会员卡页面测试', 'key' => 'cards');
     $button2 = array('name' => '链接跳转', 'sub_button' => array($serchSubButton, $videoSubButton, $praiseSubButton));
@@ -30,28 +36,30 @@ function createButton()
     $mainButton = array('button' => array($button1, $button2, $button3));
     $jsondata = json_encode($mainButton, JSON_UNESCAPED_UNICODE);
     echo $jsondata;
-    $response = $GLOBALS['mInterface']->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' . $GLOBALS['mInterface']->currentToken, $jsondata);
+    $response = $itfc->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN', $jsondata);
     echo $response;
 
 }
 
 
-function createNewKF($account_name, $name, $psw)
+function createNewKF($account_name, $name, $psw,$weixinId=0)
 {
+    $itfc=($GLOBALS['ready']?$GLOBALS['mInterface']: new interfaceHandler($weixinId));
     $password = md5($psw);
     $createInf = array('kf_account' => $account_name . '@' . wexinId, 'nickname' => $name, 'password' => $password);
     $json = json_encode($createInf, JSON_UNESCAPED_UNICODE);
     echo $json . "\n";
-    $data = $GLOBALS['mInterface']->postJsonByCurl('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=ACCESS_TOKEN', $json);
+    $data = $itfc->postJsonByCurl('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=ACCESS_TOKEN', $json);
     return $data;
 
 }
 
-function uploadTempMedia($file, $type)
+function uploadTempMedia($file, $type,$weixinId=0)
 {
+    $itfc=($GLOBALS['ready']?$GLOBALS['mInterface']: new interfaceHandler($weixinId));
     $localSavePath = $GLOBALS['mypath'] . '/tmpmedia/' . $file['name'];
     move_uploaded_file($file['tmp_name'], $localSavePath);
-    $back = $GLOBALS['mInterface']->uploadFileByCurl('https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=' . $type, $localSavePath);
+    $back = $itfc->uploadFileByCurl('https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=' . $type, $localSavePath);
     $upInf = json_decode($back, true);
     if (isset($upInf['media_id'])) {
         pdoInsert('up_temp_tbl', array('local_name' => $localSavePath, 'media_id' => $upInf['media_id'], 'expires_time' => $upInf['created_at'] + 259200, 'media_type' => $type));
@@ -61,16 +69,27 @@ function uploadTempMedia($file, $type)
     }
 }
 
-function downloadImgToHost($media_id)
+function downloadImgToHost($media_id,$weixinId=0)
 {
+    $itfc=($GLOBALS['ready']?$GLOBALS['mInterface']: new interfaceHandler($weixinId));
     $url='https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=';
-    $imgData = $GLOBALS['mInterface']->getByCurl($url.$media_id);
+    $imgData = $itfc->getByCurl($url.$media_id);
     $filePath='tmpmedia/'.$media_id.'.jpg';
     file_put_contents($filePath,$imgData);
     return $filePath;
 }
-function getUnionId($openId){
+function getUnionId($openId,$weixinId=0){
+//    wxlog('传入参数'.$weixinId);
+//    $itfc=($GLOBALS['ready']? $GLOBALS['mInterface'] : new interfaceHandler($weixinId));
+    if($GLOBALS['ready']){
+        $itfc=$GLOBALS['mInterface'];
+//        wxlog('为零'.$weixinId);
+    }else{
+        $itfc=new interfaceHandler($weixinId);
+//        wxlog('不为零'.$weixinId);
+    }
+//    wxlog('mHandle\'sId: '.$itfc->weixinId);
     $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid='.$openId.'&lang=zh_CN';
-    $jsonData=$GLOBALS['mInterface']->getByCurl($url);
-    return json_decode($jsonData,true);;
+    $jsonData=$itfc->getByCurl($url);
+    return json_decode($jsonData,true);
 }

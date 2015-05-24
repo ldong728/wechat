@@ -13,12 +13,15 @@ class interfaceHandler {
     public $currentToken='';
     public $gettedTime=0;
     public $expiresIn=7200;
-    public function __construct(){
+    public $weixinId='';
+    public function __construct($id){
+        $this->weixinId=$id;
+//        wxlog('handerConstructIdgetted:'.$id);
         $this->reflashAccessToken();
     }
     public function reflashAccessToken(){
         if($this->currentToken==''||$this->gettedTime==0) {
-            $tokenFileData = file_get_contents($GLOBALS['mypath'] . '/class/token.dat');
+            $tokenFileData = file_get_contents($GLOBALS['mypath'] . '/tokens/'.$this->weixinId.'.token');
             $token = json_decode($tokenFileData,true);
             $this->currentToken=$token['access_token'];
             $this->gettedTime=$token['gettedTime'];
@@ -36,15 +39,20 @@ class interfaceHandler {
         }
     }
     public function getTokenOnLine(){
-        $jsonToken=file_get_contents('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.appID.'&secret='.appsecret);
+        include_once $GLOBALS['mypath'].'/includes/db.inc.php';
+        $appinf=pdoQuery('user_tbl',null,array('weixin_id'=>$this->weixinId),null);
+        $data = $appinf->fetch();
+        $jsonToken=file_get_contents('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$data['app_id'].'&secret='.$data['app_secret']);
         $geted=json_decode($jsonToken,true);
         $geted['gettedTime']=time();
         $this->currentToken=$geted['access_token'];
         $this->gettedTime=$geted['gettedTime'];
         $this->expiresIn=$geted['expires_in'];
         $reJson=json_encode($geted);
-        file_put_contents($GLOBALS['mypath'] . '/class/token.dat',$reJson);
-        wxlog('getTokenOnLine');
+        file_put_contents($GLOBALS['mypath'] . '/tokens/'.$this->weixinId.'.token',$reJson);
+//        wxlog($reJson);
+//        wxlog($GLOBALS['mypath'] . '/tokens/'.$this->weixinId.'.token');
+//        wxlog('getTokenOnLine');
     }
     public function sendPost($url, $request_data) {
         $url=$this->replaceAccessToken($url);

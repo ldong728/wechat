@@ -17,5 +17,6 @@
     <label>密码<input type="password" name="password"/></label></br>
     <input type="hidden" name="login" value="1"/>
     <input type="submit" value="登录"/>
+    <a href="index.php?signup=1">注册新用户</a>
 </form>
 </body>

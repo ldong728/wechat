@@ -7,4 +7,8 @@
  */
 
 $mypath=$_SERVER['DOCUMENT_ROOT'] . '/wechat';
-include 'index.html.php';
+
+if(isset($_GET['owner'])){
+    include 'index.html.php';
+}
+

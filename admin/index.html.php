@@ -16,7 +16,7 @@
 <br/>
 <br/>
 <div>
-    <a href="../login/?signup=1">新用户注册</a>
+<?php echo 'http://'.$_SERVER[HTTP_HOST].'/wechat/index.php?id='.$_SESSION['weixinId']; ?>
 </div>
 <br/>
 <br/>

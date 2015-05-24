@@ -9,9 +9,11 @@ include_once $mypath . '/contrller/serveManager.php';
 
 
 wxlog('include ok');
-$myWechat = new wechat();
+$myWechat = new wechat($weixinId);
+$myWechat->valid();
 $msg=$myWechat->receiverFilter();
-$userInf=getUnionId($msg['from']);
+//wxlog('myId:'.$msg['me']);
+$userInf=getUnionId($msg['from'],$msg['me']);
 $userName=$userInf['nickname'];
 $userIcon = $userInf['headimgurl'];
 $sex=$userInf['sex'];
@@ -28,11 +30,11 @@ if($msg['type']=='text'){
 //    wxlog(microtime(true));
 //    $insertTime = (int)(microtime(true)*1000);
 //    wxlog($insertTime);
-    pdoInsert('wechat_wall_tbl',array('user_name'=>$userName,'sex'=>$sex,'user_icon'=>$userIcon,'content'=>$msg['content'],'upload_time'=>time()));
+    pdoInsert('wechat_wall_tbl',array('owner'=>$msg['me'],'user_name'=>$userName,'sex'=>$sex,'user_icon'=>$userIcon,'content'=>$msg['content'],'upload_time'=>time()));
 
 }
 if($msg['type']=='image'){
-    pdoInsert('wechat_wall_tbl',array('user_name'=>$userName,'sex'=>$sex,'user_icon'=>$userIcon,'img_url'=>$msg['PicUrl'],'upload_time'=>time()));
+    pdoInsert('wechat_wall_tbl',array('owner'=>$msg['me'],'user_name'=>$userName,'sex'=>$sex,'user_icon'=>$userIcon,'img_url'=>$msg['PicUrl'],'upload_time'=>time()));
 }
 
 $echoMsg=$myWechat->prepareTextMsg($msg['from'],$msg['me'],'收到了');

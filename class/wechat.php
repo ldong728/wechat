@@ -6,10 +6,16 @@
  * Time: 8:31
  */
 
-define("TOKEN", "godlee");
+//define("TOKEN", "godlee");
 
 class wechat
 {
+    public $weixinId='';
+//    public $token;
+    public function __construct($wxid){
+        $this->weixinId=$wxid;
+}
+
     public function valid()  //微信服务器验证配置用
     {
 //        wxlog('valid start');
@@ -27,8 +33,8 @@ class wechat
 
     public function receiverFilter()
     {
-        wxlog('start filt');
-        if ($this->validMsg()) {
+//        wxlog('start filt');
+//        if ($this->validMsg()) {
 //            wxlog('msg valid ok');
             $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
             if (!empty($postStr)) {
@@ -40,7 +46,7 @@ class wechat
                 $msg['me'] = $postObj->ToUserName;
                 $msg['type'] = $postObj->MsgType;
                 $msg['msgId'] = $postObj->MsgId;
-                wxlog('basic msginf ok,type: '.$msg['type']);
+//                wxlog('basic msginf ok,type: '.$msg['type']);
                 switch ($msg['type']) {
                     case 'text': {
                         $msg['content'] = trim($postObj->Content);
@@ -77,9 +83,9 @@ class wechat
                 }
             }
             return $msg;
-        }
-        echo 'error';
-        exit;
+//        }
+//        echo 'error';
+//        exit;
 
     }
 
@@ -113,17 +119,17 @@ class wechat
     {
 
         // you must define TOKEN by yourself
-        if (!defined("TOKEN")) {
-            throw new Exception('TOKEN is not defined!');
-        }
-
+//        if (!defined("TOKEN")) {
+//            throw new Exception('TOKEN is not defined!');
+//        }
+        $query=pdoQuery('user_tbl',array('token'),array('weixin_id'=>$this->weixinId),'limit 1');
+        $row=$query->fetch();
+        $token=$row['token'];
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
 
-        $token = TOKEN;
         $tmpArr = array($token, $timestamp, $nonce);
-        // use SORT_STRING rule
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode($tmpArr);
         $tmpStr = sha1($tmpStr);

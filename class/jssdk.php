@@ -6,9 +6,11 @@ class JSSDK {
   private $appId;
   private $appSecret;
   private $mInterfaceHander=null;
+    public $weixinId;
 
-  public function __construct() {
-      $temp=new interfaceHandler();
+  public function __construct($weixinId) {
+      $this->weixinId=$weixinId;
+      $temp=new interfaceHandler($weixinId);
     $this->mInterfaceHander= $temp;
     $this->appId = appID;
     $this->appSecret = appsecret;
@@ -50,7 +52,7 @@ class JSSDK {
 
   private function getJsApiTicket() {
     // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
-    $data = json_decode(file_get_contents($GLOBALS['mypath'].'/class/jsapi_ticket.dat'));
+    $data = json_decode(file_get_contents($GLOBALS['mypath'].'/tokens/'.$this->weixinId.'_jsapi_ticket.dat'));
     if ($data->expire_time < time()) {
 //        wxlog('ticket timeout: '.(time()-$data->expire_time));
       // 如果是企业号用以下 URL 获取 ticket
@@ -63,7 +65,7 @@ class JSSDK {
         $data->expire_time = time() + 7000;
         $data->jsapi_ticket = $ticket;
           $data=json_encode($data);
-        file_put_contents($GLOBALS['mypath'].'/class/jsapi_ticket.dat',$data);
+        file_put_contents($GLOBALS['mypath'].'/tokens/'.$this->weixinId.'_jsapi_ticket.dat',$data);
       }
       wxlog('get jsapiTicketOnLine');
     } else {

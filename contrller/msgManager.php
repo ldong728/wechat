@@ -18,7 +18,7 @@ include_once $mypath . '/class/jokeMaker.php';
 include_once $mypath . '/class/mobilePhoneQuery.php';
 
 wxlog('get msg');
-$weObj = new wechat();
+$weObj = new wechat($weixinId);
 $weObj->valid();
 $msg = $weObj->receiverFilter();
 wxlog('filter return ok content:'. $msg['content']);
@@ -80,6 +80,6 @@ if ($msg['type'] == 'image') {
     echo $echoStr;
 }
 if(!isset($userId)){
-    $userId=getUnionId($msg['from'])['nickname'];
+    $userId=getUnionId($msg['from'],$weixinId)['nickname'];
 }
 wxlog('receive Content: ' . $msg['content'].'  from: '.$userId);

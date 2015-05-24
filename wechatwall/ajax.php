@@ -14,9 +14,9 @@ if(isset($_POST['msgNum'])){
     $currentId = (string)$_POST['currentId'];
     if($currentId==-1){
         $time = (string)(time());
-        $data=pdoQuery('wechat_wall_tbl',null,null,' order by id desc limit '.$_POST['msgNum']);
+        $data=pdoQuery('wechat_wall_tbl',null,array('owner'=>$_POST['owner']),' order by id desc limit '.$_POST['msgNum']);
     }else{
-        $data=pdoQuery('wechat_wall_tbl',null,null,'where id>'.$currentId.' order by id asc limit '.$_POST['msgNum']);
+        $data=pdoQuery('wechat_wall_tbl',null,array('owner'=>$_POST['owner']),' and id>'.$currentId.' order by id asc limit '.$_POST['msgNum']);
     }
 
     $query=array();
@@ -26,6 +26,5 @@ if(isset($_POST['msgNum'])){
 
     }
     $jsonData = json_encode($query);
-//    wxlog('jsonData:'.$jsonData);
     echo $jsonData;
 }

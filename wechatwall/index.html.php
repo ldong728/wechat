@@ -19,10 +19,7 @@
             initCanvas();
             backGround=new Image();
             backGround.src='resource/background.png';
-//            backGround.onload=function(){
                 setInterval(reflashMsg, 3000);
-//            });
-
         });
         $(window).resize(initCanvas);
         function resizeCanvas(){
@@ -87,7 +84,7 @@
             return textarray;
         }
         function reflashMsg() {
-            var par = {'msgNum': 10, 'currentId': currentId}
+            var par = {'msgNum': 10, 'currentId': currentId,'owner':'<?php echo $_GET['owner']?>'}
             getNewMsg(par);
         }
         function test(str) {
