@@ -17,11 +17,11 @@ include_once $mypath . '/class/wechat.php';
 include_once $mypath . '/class/jokeMaker.php';
 include_once $mypath . '/class/mobilePhoneQuery.php';
 
-wxlog('get msg');
-$weObj = new wechat($weixinId);
-$weObj->valid();
-$msg = $weObj->receiverFilter();
-wxlog('filter return ok content:'. $msg['content']);
+//wxlog('get msg');
+//$weixin = new wechat($weixinId);
+//$weixin->valid();
+//$msg = $weixin->receiverFilter();
+//wxlog('filter return ok content:'. $msg['content']);
 //$userId = '';
 
 if ($msg['type'] == 'text') {
@@ -46,7 +46,7 @@ if ($msg['type'] == 'text') {
         }
 
     }
-    $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'], $response);
+    $echoStr = $weixin->prepareTextMsg($msg['from'], $msg['me'], $response);
     wxlog($echoStr);
     echo $echoStr;
 }
@@ -55,31 +55,31 @@ if ($msg['type'] == 'event') {
 //        wxlog('getTheEventKey=' . $msg['EventKey']);
         $joke = new jokeMaker();
         $response = $joke->getJoke();
-        $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'], $response);
+        $echoStr = $weixin->prepareTextMsg($msg['from'], $msg['me'], $response);
         echo $echoStr;
     }
-    if($msg['EventKey']=='cards'){
-        $content = 'http://m.1ka1.cn/RecruitMember.aspx?SID=AQUAAAAAAAUVAAAAFpFJzybbPjb4RuuSI2wCAA%3d%3d&WeiXinId=';
-        $content=$content.$msg['from'];
-//        $temp = getUnionId($msg['from']);
-//        $userId=$temp['nickname'];
-//        $content="用户信息：\n";
-//        foreach ( $temp as $k=>$v) {
-//            $content=$content.$k.':  '.$v."\n";
-//        }
-
-        $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'], $content);
-        echo $echoStr;
-    }
+//    if($msg['EventKey']=='cards'){
+//        $content = 'http://m.1ka1.cn/RecruitMember.aspx?SID=AQUAAAAAAAUVAAAAFpFJzybbPjb4RuuSI2wCAA%3d%3d&WeiXinId=';
+//        $content=$content.$msg['from'];
+////        $temp = getUnionId($msg['from']);
+////        $userId=$temp['nickname'];
+////        $content="用户信息：\n";
+////        foreach ( $temp as $k=>$v) {
+////            $content=$content.$k.':  '.$v."\n";
+////        }
+//
+//        $echoStr = $weixin->prepareTextMsg($msg['from'], $msg['me'], $content);
+//        echo $echoStr;
+//    }
 
 }
 if ($msg['type'] == 'image') {
     $filePath = downloadImgToHost($msg['MediaId']);
     pdoInsert('upload_tbl', array('user_id' => $msg['from'], 'media_id' => $msg['MediaId'], 'file_path' => $filePath));
-    $echoStr = $weObj->prepareTextMsg($msg['from'], $msg['me'],  '图片收到了,已放入照片墙');
+    $echoStr = $weixin->prepareTextMsg($msg['from'], $msg['me'],  '图片收到了,已放入照片墙');
     echo $echoStr;
 }
-if(!isset($userId)){
-    $userId=getUnionId($msg['from'],$weixinId)['nickname'];
-}
-wxlog('receive Content: ' . $msg['content'].'  from: '.$userId);
+//if(!isset($userId)){
+//    $userId=getUnionId($msg['from'],$weixinId)['nickname'];
+//}
+//wxlog('receive Content: ' . $msg['content'].'  from: '.$userId);

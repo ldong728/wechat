@@ -8,10 +8,10 @@ include_once $mypath . '/class/wechat.php';
 include_once $mypath . '/contrller/serveManager.php';
 
 
-wxlog('include ok');
-$myWechat = new wechat($weixinId);
-$myWechat->valid();
-$msg=$myWechat->receiverFilter();
+wxlog('include wechatWall ok');
+//$weixin = new wechat($weixinId);
+//$weixin->valid();
+//$msg=$weixin->receiverFilter();
 //wxlog('myId:'.$msg['me']);
 $userInf=getUnionId($msg['from'],$msg['me']);
 $userName=$userInf['nickname'];
@@ -37,7 +37,7 @@ if($msg['type']=='image'){
     pdoInsert('wechat_wall_tbl',array('owner'=>$msg['me'],'user_name'=>$userName,'sex'=>$sex,'user_icon'=>$userIcon,'img_url'=>$msg['PicUrl'],'upload_time'=>time()));
 }
 
-$echoMsg=$myWechat->prepareTextMsg($msg['from'],$msg['me'],'收到了');
+$echoMsg=$weixin->prepareTextMsg($msg['from'],$msg['me'],'收到了');
 echo $echoMsg;
 
 

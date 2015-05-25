@@ -18,7 +18,7 @@ class jokeMaker {
     private function reflashSource(){
         $getTime=json_decode(file_get_contents($GLOBALS['mypath'] .'/tmpfiles/jock_time.dat'),true);
         if(date('d',time())!=date('d',$getTime['gettedTime'])){
-            $mhand=new interfaceHandler();
+            $mhand=new interfaceHandler($GLOBALS['weixinId']);
             $jock=$mhand->getByCurl('http://api.laifudao.com/open/xiaohua.json');
             file_put_contents($GLOBALS['mypath'] .'/tmpfiles/jock.dat',$jock);
             wxlog('getJockOnline');
