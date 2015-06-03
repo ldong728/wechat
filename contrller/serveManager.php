@@ -5,10 +5,12 @@
  * Date: 2015/4/21
  * Time: 14:15
  */
+session_start();
 $mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 include_once $mypath . '/class/interfaceHandler.php';
 
 $ready = false;
+
 if(isset($_SESSION['weixinId'])){
     $mInterface = new interfaceHandler($_SESSION['weixinId']);
     $ready=true;
@@ -24,7 +26,7 @@ function deleteButton($weixinId=0)
     wxlog('delete all button');
 }
 
-function createButton($weixinId=0)
+function createButtonTemp($weixinId=0)
 {
     $itfc=($GLOBALS['ready']?$GLOBALS['mInterface']: new interfaceHandler($weixinId));
     $button1 = array('type' => 'click', 'name' => '讲个笑话', 'key' => 'abbcdsds');
@@ -39,6 +41,10 @@ function createButton($weixinId=0)
     $response = $itfc->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN', $jsondata);
     echo $response;
 
+}
+function creatButton($json){
+    $response = $GLOBALS['mInterFace']->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN', $json);
+    echo $response;
 }
 
 
@@ -79,17 +85,29 @@ function downloadImgToHost($media_id,$weixinId=0)
     return $filePath;
 }
 function getUnionId($openId,$weixinId=0){
-//    wxlog('传入参数'.$weixinId);
-//    $itfc=($GLOBALS['ready']? $GLOBALS['mInterface'] : new interfaceHandler($weixinId));
     if($GLOBALS['ready']){
         $itfc=$GLOBALS['mInterface'];
-//        wxlog('为零'.$weixinId);
     }else{
         $itfc=new interfaceHandler($weixinId);
-//        wxlog('不为零'.$weixinId);
     }
-//    wxlog('mHandle\'sId: '.$itfc->weixinId);
     $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid='.$openId.'&lang=zh_CN';
     $jsonData=$itfc->getByCurl($url);
     return json_decode($jsonData,true);
 }
+function getMenuInf(){
+    $json=$GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN');
+//    echo "ok";
+//    exit;
+    return json_decode($json,true);
+}
+function getMediaList($type,$offset){
+    $request=array('type'=>$type,'offset'=>$offset,'count'=>20);
+    $json=$GLOBALS['mInterface']->postArrayAsJson('https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN',$request);
+    return json_decode($json,true);
+}
+//function getMedia($jsonMediaId,$weixinId=0){
+//    $itfc=($GLOBALS['ready']?$GLOBALS['mInterface']:new interfaceHandler($weixinId) );
+//    $json=$itfc->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=ACCESS_TOKEN',$jsonMediaId);
+//    return json_decode($json,true);
+//
+//}

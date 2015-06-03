@@ -7,12 +7,12 @@
  */
 //include_once 'interfaceHandler.php';
 
-$mypath=$_SERVER['DOCUMENT_ROOT'] . '/wechat';
+//$mypath=$_SERVER['DOCUMENT_ROOT'] . '/wechat';
+include_once $mypath.'/class/interfaceHandler.php';
 class jokeMaker {
 //    private $joke;
 
     public function __construct(){
-//        wxlog('jokeconstruct');
         $this->reflashSource();
 }
     private function reflashSource(){

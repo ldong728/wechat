@@ -16,7 +16,13 @@ if (isset($_POST['nameReady'])) {  //新用户注册提交
             'app_secret' => $_POST['app_secret'], 'weixin_id' => $_POST['weixin_id'],'token'=>$token));
         $initJson = '{"access_token":"null","expires_in":7200,"gettedTime":0}';
         file_put_contents($GLOBALS['mypath'] . '/tokens/' . $_POST['weixin_id'] . '.token', $initJson);
-
+        $defaultModule = pdoQuery('module_tbl',array('path'),null,' limit 1');
+        $data=$defaultModule->fetch();
+        $duty = array($data['path']);
+//        $prejson=array('dutyContent'=>$duty);
+        $json = json_encode(array('dutyContent'=>$duty));
+        $json=addslashes($json);
+        $moduleId = pdoInsert('duty_tbl',array('weixin_id'=>$_POST['weixin_id'],'duty'=>$json));
         $_SESSION['weixinId'] = $_POST['weixin_id'];
         $_SESSION['login'] = true;
         $_SESSION['userName'] = $_POST['name'];

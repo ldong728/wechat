@@ -11,6 +11,7 @@
 class wechat
 {
     public $weixinId='';
+//    public $
 //    public $token;
     public function __construct($wxid){
         $this->weixinId=$wxid;
@@ -80,6 +81,7 @@ class wechat
                         break;
                     }
 
+
                 }
             }
             return $msg;
@@ -112,6 +114,33 @@ class wechat
 							</xml>";
         $resultStr = sprintf($textTpl, $sentTo, $me, $time);
         return $resultStr;
+    }
+    public function prepareNewsMsg($sentTo,$me,$newsJson){
+        $time=time();
+        $data=json_decode($newsJson,true);
+        $textTpl = "<xml>
+							<ToUserName><![CDATA[%s]]></ToUserName>
+							<FromUserName><![CDATA[%s]]></FromUserName>
+							<CreateTime>%s</CreateTime>
+							<MsgType><![CDATA[news]]></MsgType>
+							<ArticleCount>".count($data['news_item'])."</ArticleCount>
+                            <Articles>
+							";
+        $textTitle = sprintf($textTpl, $sentTo, $me, $time);
+
+        $textTpl="<item>
+                        <Title><![CDATA[%s]]></Title>
+                        <Url><![CDATA[%s]]></Url>
+                        </item>
+                        ";
+        foreach ($data['news_item'] as $row) {
+            $content=sprintf($textTpl,$row['title'],$row['url']);
+            $textTitle=$textTitle.$content;
+        }
+        $textTitle=$textTitle."</Articles></xml>";
+
+        return $textTitle;
+
     }
 
 

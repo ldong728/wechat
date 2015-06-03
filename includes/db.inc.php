@@ -82,7 +82,7 @@ function joinQuery($joinType,$fields,$tables,$joinField,$where,$group){
     }
 
 }
-function pdoInsert($tableName,$value){
+function pdoInsert($tableName,$value,$str=''){
 //    echo 'data';
 //    exit;
     $sql='INSERT INTO '.$tableName.' SET ';
@@ -93,6 +93,7 @@ function pdoInsert($tableName,$value){
         if ($j < $valueCount - 1) $sql = $sql . ',';
         $j++;
     }
+    $sql=$sql.$str;
 //    wxlog('sql:'.$sql);
 //    echo $sql;
 //    exit;

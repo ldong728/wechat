@@ -1,9 +1,9 @@
 <?php
 
 //测试号：
-define('appID','wx03393af10613da23');
-define('appsecret','40751854901cc489eddd055538224e8a');
-define('wexinId','gh_964192c927cb');
+//define('appID','wx03393af10613da23');
+//define('appsecret','40751854901cc489eddd055538224e8a');
+//define('wexinId','gh_964192c927cb');
 //个人公众号：
 //define('appID','wx8426b63b5ce8c518');
 //define('appsecret','451129432c9ebe8fb74d0ac1a3926e3e');
@@ -52,7 +52,7 @@ class interfaceHandler {
         file_put_contents($GLOBALS['mypath'] . '/tokens/'.$this->weixinId.'.token',$reJson);
 //        wxlog($reJson);
 //        wxlog($GLOBALS['mypath'] . '/tokens/'.$this->weixinId.'.token');
-//        wxlog('getTokenOnLine');
+        wxlog($this->weixinId.': getTokenOnLine');
     }
     public function sendPost($url, $request_data) {
         $url=$this->replaceAccessToken($url);
@@ -130,9 +130,15 @@ class interfaceHandler {
         $data=$this->postJsonByCurl($remote_server,$jsonData);
         return $data;
     }
-    public function uploadFileByCurl($remote_server,$file){
+    public function uploadFileByCurl($remote_server,$file,$exraInf=null){
         $remote_server=$this->replaceAccessToken($remote_server);
         $fields['media'] = '@'.$file;
+        if($exraInf!=null){
+            foreach ($exraInf as $k=>$v) {
+                $fields[$k]=$v;
+            }
+
+        }
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$remote_server);
         curl_setopt($ch, CURLOPT_POST, true );

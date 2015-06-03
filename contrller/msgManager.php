@@ -41,7 +41,7 @@ if ($msg['type'] == 'text') {
         default: {
             $phoneQuery= new mobilePhoneQuery();
             $response=$phoneQuery->getPrice($msg['content']);
-            if($response=='以上价格仅供参考，以店面实际报价为准。')$response = '哦，呵呵，你高兴就好了';
+            if($response=='以上报价由慈溪兄弟数码提供，仅供参考，详情请咨询店家')$response = '哦，呵呵，你高兴就好了';
             break;
         }
 
@@ -58,19 +58,6 @@ if ($msg['type'] == 'event') {
         $echoStr = $weixin->prepareTextMsg($msg['from'], $msg['me'], $response);
         echo $echoStr;
     }
-//    if($msg['EventKey']=='cards'){
-//        $content = 'http://m.1ka1.cn/RecruitMember.aspx?SID=AQUAAAAAAAUVAAAAFpFJzybbPjb4RuuSI2wCAA%3d%3d&WeiXinId=';
-//        $content=$content.$msg['from'];
-////        $temp = getUnionId($msg['from']);
-////        $userId=$temp['nickname'];
-////        $content="用户信息：\n";
-////        foreach ( $temp as $k=>$v) {
-////            $content=$content.$k.':  '.$v."\n";
-////        }
-//
-//        $echoStr = $weixin->prepareTextMsg($msg['from'], $msg['me'], $content);
-//        echo $echoStr;
-//    }
 
 }
 if ($msg['type'] == 'image') {
@@ -79,7 +66,3 @@ if ($msg['type'] == 'image') {
     $echoStr = $weixin->prepareTextMsg($msg['from'], $msg['me'],  '图片收到了,已放入照片墙');
     echo $echoStr;
 }
-//if(!isset($userId)){
-//    $userId=getUnionId($msg['from'],$weixinId)['nickname'];
-//}
-//wxlog('receive Content: ' . $msg['content'].'  from: '.$userId);

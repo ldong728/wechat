@@ -22,29 +22,16 @@ function formatOutput($string){
 
 }
 
-function printInf($p,$g,$s){
+function printInf($p){
     echo'</br>'.'$post:'.'</br>';
     foreach ($p as $k=>$v) {
         echo $k.":  ".$v.'</br>';
     }
-    echo'</br>'.'$get:'.'</br>';
-    foreach ($g as $k=>$v) {
-        echo $k.":  ".$v.'</br>';
-    }
-    echo'</br>'.'$session:'.'</br>';
-    foreach ($s as $k=>$v) {
-        echo $k.":  ".$v.'</br>';
-    }
+
 }
 function wxlog($str){
     if(DEBUG) {
         $log = date('Y.m.d.H:i:s', time()) . ':  ' . $str . "\n";
         file_put_contents($GLOBALS['mypath'] . '/log.txt', $log, FILE_APPEND);
     }
-}
-
-function mytest($s){
-
-    echo $s;
-    exit;
 }
