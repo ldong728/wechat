@@ -20,8 +20,9 @@ class jokeMaker {
         if(date('d',time())!=date('d',$getTime['gettedTime'])){
             $mhand=new interfaceHandler($GLOBALS['weixinId']);
             $jock=$mhand->getByCurl('http://api.laifudao.com/open/xiaohua.json');
+            $jock=preg_replace('/\,\]$/',']',$jock);
             file_put_contents($GLOBALS['mypath'] .'/tmpfiles/jock.dat',$jock);
-            wxlog('getJockOnline');
+//            wxlog('getJockOnline');
             $temp=json_encode(array('gettedTime'=>time()));
             file_put_contents($GLOBALS['mypath'] .'/tmpfiles/jock_time.dat',$temp);
             $this->initJokeNum($jock);

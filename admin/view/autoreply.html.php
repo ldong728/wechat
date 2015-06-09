@@ -6,11 +6,11 @@
 </head>
 
 <body>
-<form action="consle.php?auto_reply=1"method="post">
+<form action="autoReply.php?auto_reply=1"method="post">
 
 
     关键字：<input type="text"name="key_word"/>
-    <p><a href="consle.php?auto_reply=1">文本回复</a><a href="consle.php?auto_reply=1&reply_type=news">图文素材</a></p>
+    <p><a href="autoReply.php?auto_reply=1">文本回复</a><a href="autoReply.php?auto_reply=1&reply_type=news">图文素材</a></p>
     <div>
         <?php
             if(isset($mediaList)){
@@ -29,7 +29,26 @@
     </div>
     <input type="submit"value="确定"/>
 </form>
+<table border="1">
+    <tr>
+        <td>关键词（“.”为默认回复）</td>
+        <td>回复内容</td>
+        <td>功能</td>
+    </tr>
+    <?php foreach ($query as $row):?>
+    <tr>
+        <td><?php echo $row['key_word']?></td>
+        <td><?php echo $row['content']?></td>
+        <td><a href="autoReply.php?auto_reply=1&deleteAutoReply=<?php echo $row['id']?>">删除</a></td>
 
+
+    </tr>
+
+    <?php endforeach?>
+
+
+
+</table>
 
 </body>
 </html>

@@ -14,7 +14,7 @@ if(isset($_GET['id'])){
         $weixin->valid();
         $msg=$weixin->receiverFilter();
         foreach ($decodeData['dutyContent'] as $row) {
-            wxlog('include:'.$mypath.'/'.$row);
+//            wxlog('include:'.$mypath.'/'.$row);
             include_once $mypath.'/'.$row;
         }
     echo '';

@@ -6,7 +6,7 @@
  * Time: 17:12
  */
 wxlog('include mobilePhone ok');
-if(count($msg['content'])<10){
+if(count($msg['content'])<10&&count($msg['content'])>0){
     include_once $mypath.'/class/mobilePhoneQuery.php';
     $phoneQuery= new mobilePhoneQuery();
     $response=$phoneQuery->getPrice($msg['content']);

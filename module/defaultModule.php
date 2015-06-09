@@ -20,13 +20,7 @@ foreach ($query as $row) {
                 break;
             }
             case 'news': {
-                $handler = new interfaceHandler($weixinId);
-                $jsondata = json_encode(array('media_id' => $row['content']));
-                $getedData = $handler->postJsonByCurl(
-                    'https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=ACCESS_TOKEN'
-                    , $jsondata);
-                            $response=$weixin->prepareNewsMsg($msg['from'],$msg['me'],$getedData);
-//                             $response=$weixin->prepareTextMsg($msg['from'],$msg['me'],$jsondata);
+                            $response=$weixin->prepareNewsMsg($msg['from'],$msg['me'],$row['content']);
                              echo $response;
                              exit;
                              break;

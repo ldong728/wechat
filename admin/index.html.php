@@ -37,7 +37,7 @@
 
 </div>
 <div>
-    <a href="consle.php?auto_reply=1">自动回复设置</a>
+    <a href="autoReply.php?auto_reply=1">自动回复设置</a>
 </div>
 <br/>
 <br/>

@@ -130,10 +130,17 @@ class wechat
 
         $textTpl="<item>
                         <Title><![CDATA[%s]]></Title>
+                        <Description><![CDATA[%s]]></Description>
+                        <PicUrl><![CDATA[%s]]></PicUrl>
                         <Url><![CDATA[%s]]></Url>
                         </item>
                         ";
         foreach ($data['news_item'] as $row) {
+            $title=(isset($row['title'])? $row['title'] : '无标题');
+            $description=(isset($row['digest'])? $row['digest']:'');
+            $picUrl=(isset($row['cover_url'])?$row['cover_url']: '');
+            $url=(isset($row['url'])?$row['url']:'');
+            $url=(isset($row['content_url'])?$row['content_url'] : '');
             $content=sprintf($textTpl,$row['title'],$row['url']);
             $textTitle=$textTitle.$content;
         }

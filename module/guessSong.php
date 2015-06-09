@@ -67,7 +67,7 @@ if ($msg['type'] == 'text') {
         }
         $songList = json_decode($row['answer'], true);
         reset($songList);
-        wxlog('totalTry:'.$row['total_try']);
+//        wxlog('totalTry:'.$row['total_try']);
         if ($key = array_search($msg['content'], $songList)) {
             array_splice($songList, $key, 1);
             $jsonList = json_encode($songList);
@@ -94,11 +94,11 @@ if ($msg['type'] == 'text') {
             $sql = 'insert guess_tbl set weixin_id="'.$weixinId.'",open_id="'.$msg['from'].'", correct_try=1,total_try=1,answer="' . $jsonList . '",update_time=' . $time;
             $response = '恭喜，猜中一首!!还有' . (16 - 1 - $row['correct_try']) . '首歌';
         } else {
-            wxlog($msg['content'].' listcount: '.count($songList));
-
-            foreach ($songList as $i) {
-                wxlog('value:'.$i);
-            }
+//            wxlog($msg['content'].' listcount: '.count($songList));
+//
+//            foreach ($songList as $i) {
+//                wxlog('value:'.$i);
+//            }
             $jsonList = json_encode($songList);
             $jsonList = addslashes($jsonList);
 //            wxlog('answer not match');

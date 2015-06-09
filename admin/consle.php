@@ -98,24 +98,7 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
         include 'menuedit.html.php';
 
     }
-    if(isset($_GET['auto_reply'])){
-        if(isset($_GET['reply_type'])){
-            $mediaList = getMediaList($_GET['reply_type'],0);
-            foreach ($mediaList['item'] as $row) {
-                $allList[]=json_encode($row,JSON_UNESCAPED_UNICODE);
-            }
 
-        }
-        if(isset($_POST['content'])){
-            $_POST['key_word']=trim($_POST['key_word']);
-            $key=($_POST['key_word']==''? '.': preg_replace('/,|，/','\|',$_POST['key_word']));
-            $content=addslashes($_POST['content']);
-            pdoInsert('default_reply_tbl',array('weixin_id'=>$_SESSION['weixinId'],'reply_type'=>$_POST['type'],
-            'key_word'=>$key,'content'=>$content),' ON DUPLICATE KEY UPDATE content="'.$content.'"');
-        }
-
-        include 'autoreply.html.php';
-    }
     if(isset($_GET['del_guess_tbl'])){
         $sql='delete from guess_tbl where weixin_id="'.$_SESSION['weixinId'].'"';
         $pdo->exec($sql);
@@ -136,6 +119,9 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
 
 
     if (isset($_GET['modultest'])) {//功能测试块
+        $i=0.123;
+        $s=(string)$i;
+        echo $s;
 
     }
 
