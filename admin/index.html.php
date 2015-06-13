@@ -13,6 +13,10 @@
     <a href="consle.php?upload=1&type=thumb">上传临时缩略图</a>
     <a href="consle.php?upload=1&type=12">上传错误图片测试</a>
 </div>
+<div>
+    <a href="consle.php?kfManage=1">客服管理</a>
+</div>
+
 <br/>
 <br/>
 <div>
@@ -23,7 +27,7 @@
 <br/>
 <br/>
 <div>
-    <a href="consle.php?modulemenu=1">模块选择</a>
+    <a href="moduleConfig.php?modulemenu=1">模块选择</a>
 </div>
 
 <div>

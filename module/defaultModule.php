@@ -8,7 +8,7 @@
 include_once $mypath . '/class/interfaceHandler.php';
 
 wxlog('include default ok');
-$query = pdoQuery('default_reply_tbl', null, array('weixin_id' => $weixinId), ' order by key_word desc limit 10');
+$query = pdoQuery('default_reply_tbl', null, array('weixin_id' => $weixinId,'request_type'=>'text'), ' order by key_word desc limit 10');
 //$queryArray=$query->fetchAll();
 foreach ($query as $row) {
     if (preg_match('/' . $row['key_word'] . '/', $msg['content'])) {

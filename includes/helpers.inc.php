@@ -23,9 +23,15 @@ function formatOutput($string){
 }
 
 function printInf($p){
-    echo'</br>'.'$post:'.'</br>';
+    echo '<br/>';
     foreach ($p as $k=>$v) {
-        echo $k.":  ".$v.'</br>';
+        echo $k.":  ";
+        if(is_array($v)){
+            printInf($v);
+        }else{
+            echo $v.'  ';
+        }
+
     }
 
 }

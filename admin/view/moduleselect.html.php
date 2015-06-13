@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<form action="consle.php" method="post">
+<form action="?" method="post">
     <table id="module_table" border="1">
         <?php foreach ($menu as $row): ?>
             <tr>
@@ -28,6 +28,9 @@
                 </td>
                 <td>
                     <?php if($row['menu_inf']==null) echo '无自定义菜单' ?>
+                </td>
+                <td>
+                    <a href="?moduleConfig=<?php echo urlencode($row['path'])?>">设定</a>
                 </td>
 
             </tr>

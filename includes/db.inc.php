@@ -108,6 +108,46 @@ function pdoInsert($tableName,$value,$str=''){
     }
 
 }
+function pdoUpdate($tableName,$value,$where,$str=''){
+//    echo 'data';
+//    exit;
+    $sql='UPDATE '.$tableName.' SET ';
+    $j = 0;
+    $valueCount=count($value);
+    foreach ($value as $k => $v) {
+        $sql = $sql . $k . '=' . '"' . $v . '"';
+        if ($j < $valueCount - 1) $sql = $sql . ',';
+        $j++;
+    }
+    $whereCount = count($where);
+    if ($whereCount > 0) {
+        $sql = $sql . ' WHERE ';
+        $j = 0;
+        foreach ($where as $k => $v) {
+            if($v==null){
+                $j++;
+                continue;
+            }
+            $sql = $sql . $k . '=' . '"' . $v . '"';
+            if ($j < $whereCount - 1) $sql = $sql . ' AND ';
+            $j++;
+        }
+    }
+    $sql=$sql.$str;
+//    wxlog('sql:'.$sql);
+//    echo $sql;
+//    exit;
+    try {
+        $GLOBALS['pdo']->exec($sql);
+        return $GLOBALS['pdo']->lastInsertId();
+
+    }catch (PDOException $e) {
+        $error = 'Unable to insert to the database server.' . $e->getMessage();
+        include 'error.html.php';
+        exit();
+    }
+
+}
 function outerJoinStr($joinType,$fields,$tables,$joinField,$where,$group)
 {
     $sql = 'SELECT ';

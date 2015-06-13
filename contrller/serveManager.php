@@ -50,16 +50,20 @@ function creatButton($json)
 }
 
 
-function createNewKF($account_name, $name, $psw, $weixinId = 0)
+function createNewKF($account_name, $name, $psw)
 {
-    $itfc = ($GLOBALS['ready'] ? $GLOBALS['mInterface'] : new interfaceHandler($weixinId));
+//    $itfc = ($GLOBALS['ready'] ? $GLOBALS['mInterface'] : new interfaceHandler($weixinId));
     $password = md5($psw);
     $createInf = array('kf_account' => $account_name . '@' . wexinId, 'nickname' => $name, 'password' => $password);
     $json = json_encode($createInf, JSON_UNESCAPED_UNICODE);
     echo $json . "\n";
-    $data = $itfc->postJsonByCurl('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=ACCESS_TOKEN', $json);
+    $data = $GLOBALS['mInterface']->postJsonByCurl('https://api.weixin.qq.com/customservice/kfaccount/add?access_token=ACCESS_TOKEN', $json);
     return $data;
 
+}
+function getKFinf(){
+    $data=$GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token=ACCESS_TOKEN');
+    return $data;
 }
 
 function uploadTempMedia($file, $type, $weixinId = 0)
@@ -121,23 +125,60 @@ function getMedia($jsonMediaId)
     return $json;
 }
 
-function reflashAutoReply($weixinId = 0)
+function reflashAutoReply()
 {
-    if ($GLOBALS['ready']) {
-        $itfc = $GLOBALS['mInterface'];
-    } else {
-        $itfc = new interfaceHandler($weixinId);
-    }
-    $replyinf = $itfc->getByCurl('https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=ACCESS_TOKEN');
+    $replyinf = $GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=ACCESS_TOKEN');
+//    output(addslashes($replyinf));
+//    exit;
     $replyRule = json_decode($replyinf, true);
     if ($replyRule['is_autoreply_open'] == 1) {
-
+        if (isset($replyRule['add_friend_autoreply_info'])) {
+            $readyContent=formatContent($replyRule['add_friend_autoreply_info']['type'],$replyRule['add_friend_autoreply_info']['content']);
+            $readyContent['request_type']='event';
+            $readyContent['key_word']='add_friend_autoreply_info';
+            $readyContent['update_time']=time();
+            pdoInsert('default_reply_tbl', $readyContent, ' ON DUPLICATE KEY UPDATE content="' .$readyContent['content']. '",update_time='.time());
+        }
 
         foreach ($replyRule['keyword_autoreply_info']['list'] as $row) {
-            $keyword=$row['keyword_list_info'][0]['content'];
-            $content=$row['reply_list_info'][0]['list'];
+            $readyContent=formatContent( $row['reply_list_info'][0]['type'],$row['reply_list_info'][0]['news_info']['list']);
+            $readyContent['key_word'] = $row['keyword_list_info'][0]['content'];
+            pdoInsert('default_reply_tbl', $readyContent, ' ON DUPLICATE KEY UPDATE content="' .$readyContent['content']. '",update_time='.time());
+//            $reContent = json_encode(array('news_item' => $content));
 
         }
     }
 
+
+}
+
+function formatContent($type, $content)
+{
+    $insertArray['reply_type']=$type;
+    $insertArray['weixin_id']=$_SESSION['weixinId'];
+    $insertArray['source']=1;
+    switch ($type) {
+        case 'text': {
+            $insertArray['content']=$content;
+                         break;
+        }
+        case 'news':{
+            $data=formatNewsContent($content);
+            $insertArray['content']=$data;
+                break;
+        }
+            default:{
+
+                break;
+            }
+    }
+    return $insertArray;
+
+}
+
+function formatNewsContent(array $contentArray)
+{
+    $content = json_encode(array('news_item' => $contentArray),JSON_UNESCAPED_UNICODE);
+    $content = addslashes($content);
+    return $content;
 }

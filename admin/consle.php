@@ -6,7 +6,6 @@ include_once $mypath.'/includes/xdsmdb.php';
 include_once $mypath . '/includes/helpers.inc.php';
 include_once $mypath.'/contrller/serveManager.php';
 include_once $mypath.'/class/mobilePhoneQuery.php';
-include_once $mypath.'/class/trainQuery.php';
 session_start();
 if(isset($_SESSION['login'])&&$_SESSION['login']) {
 
@@ -50,46 +49,59 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
         createButton();
         exit;
     }
-    if(isset($_GET['modulemenu'])){
-        $query=pdoQuery('duty_tbl',array('duty'),array('weixin_id'=>$_SESSION['weixinId']),' limit 1');
-        $row=$query->fetch();
-        $duty=json_decode($row['duty'],true);
-        $query=pdoQuery('module_tbl',null,null,' limit 20');
-        foreach ($query as $row) {
-            $menu[]=array('name'=>$row['name'],'inf'=>$row['inf'],'path'=>$row['path'],'menu_inf'=>$row['menu_inf'],
-            'price'=>$row['price'],'uni'=>$row['uni'],'selected'=>(array_search($row['path'],$duty['dutyContent'])>-1 ? 1:0));
-        }
-        include 'moduleselect.html.php';
-        exit;
-
-    }
-    if(isset($_POST['moduleset'])){
-
-        if(isset($_POST['mulmodule'])){
-            for($i=0;$i<count($_POST['mulmodule']);$i++){
-                $modules[]=$_POST['mulmodule'][$i];
-            }
-        }
-        if(isset($_POST['unimodule'])){
-            $modules[]=$_POST['unimodule'];
-            $menuInf=pdoQuery('module_tbl',array('menu_inf'),array('path'=>$_POST['unimodule']),' limit 1');
-            $menu=$menuInf->fetch();
-            if($menu['menu_inf']!=null){
-                deleteButton();
-                creatButton($menu['menu_inf']);
-            }
-        }
-        $prejson=array('dutyContent'=>$modules);
-        $json=json_encode($prejson);
-        $json=addslashes($json);
-        $sql = 'update duty_tbl set duty="'.$json.'" where weixin_id="'.$_SESSION['weixinId'].'"';
-        echo $sql;
-        $pdo->exec($sql);
-        header('location: index.html.php');
-        exit;
-//        pdoInsert('duty_tbl',array('weixin_id'=>$_SESSION['weixinId'],'duty'=>$json));
-
-    }
+//    if(isset($_GET['modulemenu'])){
+//        $query=pdoQuery('duty_tbl',array('duty'),array('weixin_id'=>$_SESSION['weixinId']),' limit 1');
+//        $row=$query->fetch();
+//        $duty=json_decode($row['duty'],true);
+//        $query=pdoQuery('module_tbl',null,null,' limit 20');
+//
+//        foreach ($query as $row) {
+//            $menu[]=array('name'=>$row['name'],'inf'=>$row['inf'],'path'=>$row['path'],'menu_inf'=>$row['menu_inf'],
+//            'price'=>$row['price'],'uni'=>$row['uni'],'selected'=>(array_search($row['path'],$duty['dutyContent'])>-1 ? 1:0));
+//        }
+//        include 'moduleselect.html.php';
+//        exit;
+//
+//    }
+//    if(isset($_POST['moduleset'])){
+//
+//        if(isset($_POST['mulmodule'])){
+//            for($i=0;$i<count($_POST['mulmodule']);$i++){
+//                $modules[]=$_POST['mulmodule'][$i];
+//            }
+//        }
+//        if(isset($_POST['unimodule'])){
+//            $modules[]=$_POST['unimodule'];
+//            $menuInf=pdoQuery('module_tbl',array('menu_inf'),array('path'=>$_POST['unimodule']),' limit 1');
+//            $menu=$menuInf->fetch();
+//            if($menu['menu_inf']!=null){
+//                deleteButton();
+//                creatButton($menu['menu_inf']);
+//            }
+//        }
+//        $prejson=array('dutyContent'=>$modules);
+//        $json=json_encode($prejson);
+//        $json=addslashes($json);
+//        $sql = 'update duty_tbl set duty="'.$json.'" where weixin_id="'.$_SESSION['weixinId'].'"';
+//        echo $sql;
+//        $pdo->exec($sql);
+//        header('location: index.html.php');
+//        exit;
+//
+//    }
+//    if(isset($_GET['moduleConfig'])){
+//        $query=pdoQuery('module_config_tbl',null,array('path'=>$_GET['module_config_tbl'],'weixin_id'=>$_SESSION['weixinId']),'limit 1');
+//        $row=$query->fetch();
+//        if($row!=false){
+//            $configList=json_decode($row['config'],true);
+//            include 'view/moduleconfig.html.php';
+//            exit;
+//        }else{
+//            echo " no config info";
+//            exit;
+//        }
+//
+//    }
 
     if(isset($_GET['menu'])){
         $menuInf=getMenuInf();
@@ -105,19 +117,6 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
         header('location: index.php');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     if (isset($_GET['modultest'])) {//功能测试块
         $i=0.123;
         $s=(string)$i;
@@ -130,11 +129,12 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
         include 'query.html.php';
 
     }
-
-
-
-
-
+    if(isset($_GET['kfManage'])){
+        $data=getKFinf();
+        $dataArray=json_decode($data,true);
+        include 'view/kfManage.html.php';
+        exit;
+    }
 
 }else{
     include '../login/index.php';

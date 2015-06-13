@@ -29,6 +29,9 @@
     </div>
     <input type="submit"value="确定"/>
 </form>
+<div>
+    <a href="autoReply.php?getDefultReply=1">获取原始自动回复设置</a>
+</div>
 <table border="1">
     <tr>
         <td>关键词（“.”为默认回复）</td>
@@ -49,6 +52,6 @@
 
 
 </table>
-
+<?php include '../uedit/edit.html.php'?>
 </body>
 </html>

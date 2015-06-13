@@ -45,7 +45,12 @@ if (isset($_SESSION['login']) && $_SESSION['login']) {
             header('location: ?auto_reply=1');
 
         }
+
         $query = pdoQuery('default_reply_tbl', null, array('weixin_id' => $_SESSION['weixinId']), null);
         include 'view/autoreply.html.php';
+    }
+    if(isset($_GET['getDefultReply'])){
+        reflashAutoReply();
+        header('location: ?auto_reply=1');
     }
 }

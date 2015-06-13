@@ -140,12 +140,12 @@ class wechat
             $description=(isset($row['digest'])? $row['digest']:'');
             $picUrl=(isset($row['cover_url'])?$row['cover_url']: '');
             $url=(isset($row['url'])?$row['url']:'');
-            $url=(isset($row['content_url'])?$row['content_url'] : '');
-            $content=sprintf($textTpl,$row['title'],$row['url']);
+            $url=(isset($row['content_url'])?$row['content_url'] : $url);
+            $content=sprintf($textTpl,$title,$description,$picUrl,$url);
             $textTitle=$textTitle.$content;
         }
         $textTitle=$textTitle."</Articles></xml>";
-
+        wxlog($textTitle);
         return $textTitle;
 
     }
