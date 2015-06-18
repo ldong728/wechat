@@ -27,7 +27,7 @@
 <br/>
 <br/>
 <div>
-    <a href="moduleConfig.php?modulemenu=1">模块选择</a>
+    <a href="moduleConfig.php?modulemenu=1">模块选择与设置</a>
 </div>
 
 <div>
@@ -41,7 +41,7 @@
 
 </div>
 <div>
-    <a href="autoReply.php?auto_reply=1">自动回复设置</a>
+<!--    <a href="autoReply.php?auto_reply=1">自动回复设置</a>-->
 </div>
 <br/>
 <br/>

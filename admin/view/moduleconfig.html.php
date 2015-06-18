@@ -17,7 +17,7 @@ foreach ( $config as $k=>$v) {
 
 
 ?>
-    <input type="submit"value="确认修改"/>
+    <br/><input type="submit"value="确认修改"/>
 </form>
 </body>
 </html>

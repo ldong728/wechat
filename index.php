@@ -18,6 +18,7 @@ if(isset($_GET['id'])){
             $query=pdoQuery('module_config_tbl',array('config'),array('weixin_id'=>$weixinId,'module_path'=>$row),' limit 1');
             if($config=$query->fetch()){
                 $config=json_decode($config['config'],true);
+                $config=$config['config'];
             }
             include_once $mypath.'/'.$row;
         }

@@ -11,8 +11,7 @@
 class wechat
 {
     public $weixinId='';
-//    public $
-//    public $token;
+    public $msg;
     public function __construct($wxid){
         $this->weixinId=$wxid;
 }
@@ -84,7 +83,9 @@ class wechat
 
                 }
             }
+            $this->msg=$msg;
             return $msg;
+
 //        }
 //        echo 'error';
 //        exit;
@@ -115,6 +116,14 @@ class wechat
         $resultStr = sprintf($textTpl, $sentTo, $me, $time);
         return $resultStr;
     }
+    public function replytext($response){
+        if(isset($this->msg)){
+            $res=$this->prepareTextMsg($this->msg['from'],$this->msg['me'],$response);
+            echo $res;
+        }
+        echo '';
+    }
+
     public function prepareNewsMsg($sentTo,$me,$newsJson){
         $time=time();
         $data=json_decode($newsJson,true);
@@ -145,7 +154,7 @@ class wechat
             $textTitle=$textTitle.$content;
         }
         $textTitle=$textTitle."</Articles></xml>";
-        wxlog($textTitle);
+//        wxlog($textTitle);
         return $textTitle;
 
     }

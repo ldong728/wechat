@@ -21,7 +21,7 @@
                     ?>
                 </td>
                 <td>
-                    <?php echo $row['name'] ?>
+                    <a href="?moduleInf=<?php echo urlencode($row['path'])?>"><?php echo $row['name'] ?></a>
                 </td>
                 <td>
                     <?php echo $row['inf'] ?>
