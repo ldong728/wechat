@@ -49,64 +49,10 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
         createButton();
         exit;
     }
-//    if(isset($_GET['modulemenu'])){
-//        $query=pdoQuery('duty_tbl',array('duty'),array('weixin_id'=>$_SESSION['weixinId']),' limit 1');
-//        $row=$query->fetch();
-//        $duty=json_decode($row['duty'],true);
-//        $query=pdoQuery('module_tbl',null,null,' limit 20');
-//
-//        foreach ($query as $row) {
-//            $menu[]=array('name'=>$row['name'],'inf'=>$row['inf'],'path'=>$row['path'],'menu_inf'=>$row['menu_inf'],
-//            'price'=>$row['price'],'uni'=>$row['uni'],'selected'=>(array_search($row['path'],$duty['dutyContent'])>-1 ? 1:0));
-//        }
-//        include 'moduleselect.html.php';
-//        exit;
-//
-//    }
-//    if(isset($_POST['moduleset'])){
-//
-//        if(isset($_POST['mulmodule'])){
-//            for($i=0;$i<count($_POST['mulmodule']);$i++){
-//                $modules[]=$_POST['mulmodule'][$i];
-//            }
-//        }
-//        if(isset($_POST['unimodule'])){
-//            $modules[]=$_POST['unimodule'];
-//            $menuInf=pdoQuery('module_tbl',array('menu_inf'),array('path'=>$_POST['unimodule']),' limit 1');
-//            $menu=$menuInf->fetch();
-//            if($menu['menu_inf']!=null){
-//                deleteButton();
-//                creatButton($menu['menu_inf']);
-//            }
-//        }
-//        $prejson=array('dutyContent'=>$modules);
-//        $json=json_encode($prejson);
-//        $json=addslashes($json);
-//        $sql = 'update duty_tbl set duty="'.$json.'" where weixin_id="'.$_SESSION['weixinId'].'"';
-//        echo $sql;
-//        $pdo->exec($sql);
-//        header('location: index.html.php');
-//        exit;
-//
-//    }
-//    if(isset($_GET['moduleConfig'])){
-//        $query=pdoQuery('module_config_tbl',null,array('path'=>$_GET['module_config_tbl'],'weixin_id'=>$_SESSION['weixinId']),'limit 1');
-//        $row=$query->fetch();
-//        if($row!=false){
-//            $configList=json_decode($row['config'],true);
-//            include 'view/moduleconfig.html.php';
-//            exit;
-//        }else{
-//            echo " no config info";
-//            exit;
-//        }
-//
-//    }
 
     if(isset($_GET['menu'])){
         $menuInf=getMenuInf();
         $buttonInf=$menuInf['menu']['button'];
-//        exit;
         include 'menuedit.html.php';
 
     }
@@ -118,26 +64,36 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
     }
 
     if (isset($_GET['modultest'])) {//功能测试块
-        $i=0.123;
-        $s=(string)$i;
-        echo $s;
+        echo 'ok';
+        $xml=new SimpleXMLElement('<hahaha></hahaha>');
+        $xml->addChild('abc','cde');
+        $xml->addChild('name','don');
+
+        $str=$xml->asXML();
+        echo $str;
+
+//        $button=getMenuInf();
+//        $buttonInf=$button['selfmenu_info']['button'];
+//        include 'view/menuedit.html.php';
+        exit;
 
     }
 
     if(isset($_GET['getContact'])){
         $query=pdoQuery('guess_tbl',null,array('weixin_id'=>$_SESSION['weixinId']),' order by correct_try desc, update_time asc limit 20');
-        include 'query.html.php';
+        printView('/admin/view/query.html.php','自动回复设置');
 
     }
     if(isset($_GET['kfManage'])){
         $data=getKFinf();
         $dataArray=json_decode($data,true);
-        include 'view/kfManage.html.php';
+        printView('/admin/view/kfManage.html.php','客服管理');
         exit;
     }
 
 }else{
     include '../login/index.php';
+
 
 }
 

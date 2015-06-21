@@ -23,21 +23,29 @@ function formatOutput($string){
 }
 
 function printInf($p){
-    echo '<br/>';
+    echo '<br/>'.'{';
     foreach ($p as $k=>$v) {
-        echo $k.":  ";
+       echo $k.':  ';
         if(is_array($v)){
             printInf($v);
         }else{
-            echo $v.'  ';
+            echo $v.',';
         }
 
     }
-
+    echo '}';
 }
 function wxlog($str){
     if(DEBUG) {
         $log = date('Y.m.d.H:i:s', time()) . ':  ' . $str . "\n";
         file_put_contents($GLOBALS['mypath'] . '/log.txt', $log, FILE_APPEND);
     }
+}
+
+function printView($addr,$title='abc'){
+
+    $mypath= $GLOBALS['mypath'];
+    include $mypath.'/admin/templates/header.html.php';
+    include $mypath.$addr;
+    include $mypath.'/admin/templates/footer.html.php';
 }

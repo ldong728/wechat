@@ -47,7 +47,7 @@ if (isset($_SESSION['login']) && $_SESSION['login']) {
         }
 
         $query = pdoQuery('default_reply_tbl', null, array('weixin_id' => $_SESSION['weixinId']), null);
-        include 'view/autoreply.html.php';
+        printView('/admin/view/autoreply.html.php','自动回复设置');
     }
     if(isset($_GET['getDefultReply'])){
         reflashAutoReply();

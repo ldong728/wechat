@@ -8,14 +8,15 @@
 include_once $mypath . '/class/interfaceHandler.php';
 
 wxlog('include default ok');
-$query = pdoQuery('default_reply_tbl', null, array('weixin_id' => $weixinId,'request_type'=>'text'), ' order by key_word desc limit 10');
+$query = pdoQuery('default_reply_tbl', null, array('weixin_id' => $weixinId), ' order by key_word desc limit 10');
 //$queryArray=$query->fetchAll();
 foreach ($query as $row) {
-    if (preg_match('/' . $row['key_word'] . '/', $msg['content'])) {
+    if (preg_match('/' . $row['key_word'] . '/', $msg['Content'])) {
         switch ($row['reply_type']) {
             case 'text': {
-                $response = $weixin->prepareTextMsg($msg['from'], $msg['me'], $row['content']);
-                echo $response;
+                $weixin->replyMsg(array('Content'=>$row['content'],'MsgType'=>'text',));
+//                $response=$weixin->prepareTextMsg($msg['from'],$msg['me'],$row['content']);
+//                echo $response;
                 exit;
                 break;
             }

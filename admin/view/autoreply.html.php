@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>自动回复设置</title>
-</head>
+<?php $query=$GLOBALS["query"] ?>
 
-<body>
 <form action="autoReply.php?auto_reply=1"method="post">
 
 
@@ -27,7 +21,8 @@
             }
         ?>
     </div>
-    <input type="submit"value="确定"/>
+    <p class="button"><button>确定</button></p>
+    <br/>
 </form>
 <div>
     <a href="autoReply.php?getDefultReply=1">获取原始自动回复设置</a>
@@ -53,5 +48,3 @@
 
 </table>
 <?php include '../uedit/edit.html.php'?>
-</body>
-</html>

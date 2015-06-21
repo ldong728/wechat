@@ -31,15 +31,11 @@ class wechat
 
 
 
-    public function receiverFilter()
+    public function receiverFilter_o()
     {
-//        wxlog('start filt');
-//        if ($this->validMsg()) {
-//            wxlog('msg valid ok');
+
             $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
             if (!empty($postStr)) {
-                /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
-                   the best way is to check the validity of xml by yourself */
                 libxml_disable_entity_loader(true);
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $msg['from'] = $postObj->FromUserName;
@@ -77,6 +73,7 @@ class wechat
                     case 'event': {
                         $msg['Event'] = $postObj->Event;
                         $msg['EventKey'] = $postObj->EventKey;
+
                         break;
                     }
 
@@ -84,6 +81,7 @@ class wechat
                 }
             }
             $this->msg=$msg;
+            wxlog(json_encode($msg));
             return $msg;
 
 //        }
@@ -91,37 +89,66 @@ class wechat
 //        exit;
 
     }
+    public function receiverFilter()
+    {
+
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        if (!empty($postStr)) {
+            libxml_disable_entity_loader(true);
+            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $msg['from'] = $postObj->FromUserName;
+            $msg['me'] = $postObj->ToUserName;
+            $msg['content'] = trim($postObj->Content);
+            foreach ($postObj->children() as $child) {
+//                wxlog($child);
+                $msg[$child->getName()]=(string)$child;
+            }
+            $this->msg=$msg;
+            return $msg;
+        }
+    }
 
     public function prepareTextMsg($sentTo, $me, $content)
     {
-        $time = time();
-        $textTpl = "<xml>
-							<ToUserName><![CDATA[%s]]></ToUserName>
-							<FromUserName><![CDATA[%s]]></FromUserName>
-							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[text]]></MsgType>
-							<Content><![CDATA[%s]]></Content>
-							</xml>";
-        $resultStr = sprintf($textTpl, $sentTo, $me, $time, $content);
+        $con=array('MsgType'=>'text','Content'=>$content);
+        $resultStr=$this->prepareMsg($con);
         return $resultStr;
     }
     public function prepareToKFMsg($sentTo,$me){
-        $time = time();
-        $textTpl = "<xml>
-							<ToUserName><![CDATA[%s]]></ToUserName>
-							<FromUserName><![CDATA[%s]]></FromUserName>
-							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[transfer_customer_service]]></MsgType>
-							</xml>";
-        $resultStr = sprintf($textTpl, $sentTo, $me, $time);
+        $resultStr=$this->prepareMsg(array('MsgType'=>'transfer_customer_service'));
         return $resultStr;
     }
-    public function replytext($response){
-        if(isset($this->msg)){
-            $res=$this->prepareTextMsg($this->msg['from'],$this->msg['me'],$response);
-            echo $res;
+
+    public function replyMsg(array $content){
+        $replyStr=$this->prepareMsg($content);
+        echo $replyStr;
+    }
+
+    private function prepareMsg(array $content){
+        $textTpl = '<?xml version="1.0" encoding="utf-8"?><xml>
+							<ToUserName><![CDATA['.$this->msg['FromUserName'].']]></ToUserName>
+							<FromUserName><![CDATA['.$this->msg['ToUserName'].']]></FromUserName>
+							<CreateTime>'.time().'</CreateTime>
+							</xml>';
+        $xml=new SimpleXMLElement($textTpl);
+        $this->arrayToXml($xml,$content);
+        $replyStr=$xml->asXML();
+        return $replyStr;
+    }
+    private function arrayToXml(SimpleXMLElement $xml, array $array){
+        foreach ($array as $k => $v) {
+            if(is_array($v)){
+                arrayToXml($xml->addChild($k),$v);
+            }else{
+                $xml->addChild($k,$v);
+            }
         }
-        echo '';
+        return $xml;
+
+    }
+    public function replytext($response){
+        $content=array('MsgType'=>'text','Content'=>$response);
+        $this->replyMsg($content);
     }
 
     public function prepareNewsMsg($sentTo,$me,$newsJson){

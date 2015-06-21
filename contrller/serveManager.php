@@ -105,9 +105,7 @@ function getUnionId($openId, $weixinId = 0)
 
 function getMenuInf()
 {
-    $json = $GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN');
-//    echo "ok";
-//    exit;
+    $json = $GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN');
     return json_decode($json, true);
 }
 

@@ -31,14 +31,14 @@ if ($msg['type'] == 'text') {
     $time = time();
     wxlog('type filt ok');
     if(strlen($msg['content'])>30){
-        $sql = 'update guess_tbl set contact="'.$msg['content'].'" where open_id="'.$msg['from'].'"';
+        $sql = 'update guess_tbl set contact="'.$msg['Content'].'" where open_id="'.$msg['from'].'"';
         $pdo->exec($sql);
         $response='您发送的信息已作为地址保存，请再次核对地址，姓名，联系电话是否有误，如需修改，重新发送一遍修改过的信息即可';
         $ab=$weixin->prepareTextMsg($msg['from'],$msg['me'],$response);
         echo $ab;
         exit;
     }
-    if ($msg['content'] == '排名') {
+    if ($msg['Content'] == '排名') {
         $query=pdoQuery('guess_tbl',null,array('weixin_id'=>$weixinId),' order by correct_try desc, update_time asc limit '.$rank);
         $position=1;
         foreach ($query as $row) {
@@ -89,7 +89,7 @@ if ($msg['type'] == 'text') {
 
 
 //        wxlog('totalTry:'.$row['total_try']);
-        if ($key = array_search($msg['content'], $songList)) {
+        if ($key = array_search($msg['Content'], $songList)) {
             array_splice($songList, $key, 1);
             $jsonList = json_encode($songList);
             $jsonList = addslashes($jsonList);
@@ -99,7 +99,7 @@ if ($msg['type'] == 'text') {
         } else {
             $sourceList=formatSourceFromConfig($config['key_word']);
             $sql = 'update guess_tbl set total_try=total_try+1,update_time=' . $time . ' where open_id="' . $msg['from'] . '" and weixin_id="' . $weixinId . '"';
-            $response =(array_search($msg['content'],$sourceList)==false? '很遗憾，没猜中，还有'.($totalTry-1-$row['total_try']) . '次机会' : '已经猜过了，还有'.($totalTry-1-$row['total_try']) . '次机会');
+            $response =(array_search($msg['Content'],$sourceList)==false? '很遗憾，没猜中，还有'.($totalTry-1-$row['total_try']) . '次机会' : '已经猜过了，还有'.($totalTry-1-$row['total_try']) . '次机会');
         }
 //        wxlog($sql);
         $pdo->exec($sql);
@@ -108,7 +108,7 @@ if ($msg['type'] == 'text') {
         $songList=formatSourceFromConfig($config['key_word']);;
         $correctLast=count($songList);
         reset($songList);
-        if ($key = array_search($msg['content'], $songList)) {
+        if ($key = array_search($msg['Content'], $songList)) {
 //            wxlog('answer match');
             array_splice($songList, $key, 1);
             $jsonList = json_encode($songList);
@@ -116,7 +116,7 @@ if ($msg['type'] == 'text') {
             $sql = 'insert guess_tbl set weixin_id="'.$weixinId.'",open_id="'.$msg['from'].'", correct_try=1,total_try=1,answer="' . $jsonList . '",update_time=' . $time;
             $response = '恭喜，猜中一题!!还有' . ($correctLast-2) . '题';
         } else {
-//            wxlog($msg['content'].' listcount: '.count($songList));
+//            wxlog($msg['Content'].' listcount: '.count($songList));
 //
 //            foreach ($songList as $i) {
 //                wxlog('value:'.$i);

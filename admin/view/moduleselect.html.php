@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>模式选择</title>
-</head>
-
-<body>
+<?php $menu = $GLOBALS["menu"]?>
 <form action="?" method="post">
     <table id="module_table" border="1">
         <?php foreach ($menu as $row): ?>
@@ -39,10 +32,8 @@
 
     </table>
     <input type="hidden" name="moduleset"/>
-    <input type="submit" value="确定"/>
+    <p class="button"><button>确定</button></p>
+
 
 </form>
 
-
-</body>
-</html>
