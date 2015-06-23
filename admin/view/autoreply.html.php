@@ -47,4 +47,3 @@
 
 
 </table>
-<?php include '../uedit/edit.html.php'?>

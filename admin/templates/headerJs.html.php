@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <title><?php echo $title?></title>
-    <script type="text/javascript" src="../jquery.js"></script>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="third-party/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../uedit/umeditor.min.js"></script>
+    <script type="text/javascript" src="../uedit/lang/zh-cn/zh-cn.js"></script>
+    <title><?php echo $title; ?></title>
     <link rel="stylesheet" type="text/css" href="stylesheet/style.css">
 </head>
 

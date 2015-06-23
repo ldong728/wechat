@@ -93,8 +93,12 @@ function pdoInsert($tableName,$value,$str=''){
         if ($j < $valueCount - 1) $sql = $sql . ',';
         $j++;
     }
-    $sql=$sql.$str;
-//    wxlog('sql:'.$sql);
+    if($str=='ignore'){
+        $sql=preg_replace('/INTO/',$str,$sql);
+    }else{
+        $sql=$sql.$str;
+    }
+
 //    echo $sql;
 //    exit;
     try {

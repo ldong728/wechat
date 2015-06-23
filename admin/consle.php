@@ -2,13 +2,29 @@
 $mypath = $_SERVER['DOCUMENT_ROOT'] . '/wechat';
 include_once $mypath . '/includes/magicquotes.inc.php';
 include_once $mypath . '/includes/db.inc.php';
-include_once $mypath.'/includes/xdsmdb.php';
 include_once $mypath . '/includes/helpers.inc.php';
 include_once $mypath.'/contrller/serveManager.php';
-include_once $mypath.'/class/mobilePhoneQuery.php';
+include_once $mypath.'/class/newsEdit.php';
 session_start();
 if(isset($_SESSION['login'])&&$_SESSION['login']) {
 
+    if(isset($_GET['uedit'])){
+//        $_POST['uEdit'];
+        $id=pdoInsert('news_tbl',array('md5'=>md5($_POST['uEdit']),'weixin_id'=>$_SESSION['weixinId'],'content'=>addslashes($_POST['uEdit']),'update_time'=>time()));
+        $query=pdoQuery('news_tbl',null,array('id'=>$id),null);
+        $row=$query->fetch();
+        output($row['content']);
+//        echo $row('content');
+        echo 'OK';
+        exit;
+    }
+    if(isset($_GET['newsedit'])){
+        if(!isset($_SESSION['temp_name'])){
+            $_SESSION['temp_name']=getRandStr();
+        }
+        $news=new newsEdit($_SESSION['temp_name']);
+
+    }
 
     if (isset($_GET['upload'])) {
         include 'upload.html.php';
@@ -64,17 +80,8 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
     }
 
     if (isset($_GET['modultest'])) {//功能测试块
-        echo 'ok';
-        $xml=new SimpleXMLElement('<hahaha></hahaha>');
-        $xml->addChild('abc','cde');
-        $xml->addChild('name','don');
-
-        $str=$xml->asXML();
-        echo $str;
-
-//        $button=getMenuInf();
-//        $buttonInf=$button['selfmenu_info']['button'];
-//        include 'view/menuedit.html.php';
+        printView('/admin/view/newsEdit.html.php','测试页');
+//        unlink("../user_img/gh_904600228e98/eElEEzrE53tgVvwL*");
         exit;
 
     }

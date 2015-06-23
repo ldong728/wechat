@@ -42,10 +42,24 @@ function wxlog($str){
     }
 }
 
-function printView($addr,$title='abc'){
+function printView($addr,$title='abc',$hasInput=false){
 
     $mypath= $GLOBALS['mypath'];
-    include $mypath.'/admin/templates/header.html.php';
+    if($hasInput){
+        include $mypath.'/admin/templates/headerJs.html.php';
+    }else{
+        include $mypath.'/admin/templates/header.html.php';
+    }
+
     include $mypath.$addr;
     include $mypath.'/admin/templates/footer.html.php';
+}
+function getRandStr($length = 16)
+{
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    $str = "";
+    for ($i = 0; $i < $length; $i++) {
+        $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+    }
+    return $str;
 }
