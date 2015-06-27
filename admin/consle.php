@@ -8,17 +8,23 @@ include_once $mypath.'/class/newsEdit.php';
 session_start();
 if(isset($_SESSION['login'])&&$_SESSION['login']) {
 
-    if(isset($_GET['uedit'])){
-//        $_POST['uEdit'];
-        $id=pdoInsert('news_tbl',array('md5'=>md5($_POST['uEdit']),'weixin_id'=>$_SESSION['weixinId'],'content'=>addslashes($_POST['uEdit']),'update_time'=>time()));
-        $query=pdoQuery('news_tbl',null,array('id'=>$id),null);
-        $row=$query->fetch();
-        output($row['content']);
-//        echo $row('content');
-        echo 'OK';
+//    if(isset($_GET['uedit'])){
+////        $_POST['uEdit'];
+//        $id=pdoInsert('news_tbl',array('md5'=>md5($_POST['uEdit']),'weixin_id'=>$_SESSION['weixinId'],'content'=>addslashes($_POST['uEdit']),'update_time'=>time()));
+//        $query=pdoQuery('news_tbl',null,array('id'=>$id),null);
+//        $row=$query->fetch();
+//        output($row['content']);
+////        echo $row('content');
+//        echo 'OK';
+//        exit;
+//    }
+    if(isset($_GET['getNewsEditor'])){
+        $query=pdoQuery('news_tbl',null,array('weixin_id'=>$_SESSION['weixinId']),' limit 20');
+        printView('/admin/view/newsEdit.html.php','图文信息编辑');
         exit;
     }
     if(isset($_GET['newsedit'])){
+
         if(!isset($_SESSION['temp_name'])){
             $_SESSION['temp_name']=getRandStr();
         }

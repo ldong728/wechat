@@ -9,7 +9,7 @@ if(isset($_SESSION['login'])&&$_SESSION['login']){
     $query = pdoQuery('user_tbl',array('token'),array('weixin_id'=>$_SESSION['weixinId']),' limit 1');
     $row=$query->fetch();
     $token=$row['token'];
-    printView('/admin/view/index.html.php','控制器');
+    printView('/admin/view/index.html.php','首页');
 }else{
     header('location: ../login/index.php');
 

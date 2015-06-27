@@ -1,4 +1,5 @@
 <?php $query=$GLOBALS["query"] ?>
+<?php $allList=$GLOBALS['allList']?>
 
 <form action="autoReply.php?auto_reply=1"method="post">
 
@@ -7,7 +8,7 @@
     <p><a href="autoReply.php?auto_reply=1">文本回复</a><a href="autoReply.php?auto_reply=1&reply_type=news">图文素材</a></p>
     <div>
         <?php
-            if(isset($mediaList)){
+            if(isset($allList)){
                 echo '<input type="hidden"name="type"value="'.$_GET['reply_type'].'"/>';
                 foreach ($allList as $row) {
                     $rowdata=json_decode($row,true);

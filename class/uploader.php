@@ -11,6 +11,7 @@
 class uploader
 {
     private $weixinId;
+    private $md5;
     private $fileField;            //文件域名
     private $file;                 //文件上传对象
     private $config;               //配置信息
@@ -103,9 +104,9 @@ class uploader
             return;
         }
         $news_id=$this->fileName;
-        $md5=md5_file($file['tmp_name']);
+        $this->md5=md5_file($file['tmp_name']);
 
-        if($this->checkFileMd5($news_id,$md5)){
+        if($this->checkFileMd5($news_id,$this->md5)){
           return;
         }
 
@@ -118,31 +119,23 @@ class uploader
             }else{
                 pdoInsert('img_tbl',array(
                     "weixin_id"=>$_SESSION['weixinId'],
-                    "md5"=>$md5,
+                    "md5"=>$this->md5,
                     "originalName" => $this->oriName ,
                     "name" => $this->fileName ,
                     "url" => $this->fullName ,
                     "size" => $this->fileSize ,
                     "type" => $this->fileType ,
                 ));
-                $this->addImgToNews($news_id,$md5);
             }
         }
 
 
     }
 
-    /**
-     * 链接图文信息与图片，便于管理
-     * @param $news_id
-     * @param $md5
-     */
-    private function addImgToNews($news_id,$md5){
-        pdoInsert('news_img_tbl',array('news_id'=>$news_id,'img_id'=>$md5),'ignore');
-    }
+
 
     /**
-     * 比对上传文件的Md5值，如与已上传文件重复则直接返回已上传的文件
+     * 比对上传文件的Md5值，如重复则直接返回原文件信息
      * @param $news_id 图文信息名
      * @param $md5 上传文件的md5值
      */
@@ -153,8 +146,6 @@ class uploader
             wxlog('match');
             $this->fileName=$row['name'];
             $this->fullName=$row['url'];
-            $this->addImgToNews($news_id,$md5);
-
             return true;
         }else{
             wxlog('not match');
@@ -191,6 +182,7 @@ class uploader
     {
         return array(
             "originalName" => $this->oriName ,
+            'md5'=>$this->md5,
             "name" => $this->fileName ,
             "url" => $this->fullName ,
             "size" => $this->fileSize ,

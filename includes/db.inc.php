@@ -112,7 +112,7 @@ function pdoInsert($tableName,$value,$str=''){
     }
 
 }
-function pdoUpdate($tableName,$value,$where,$str=''){
+function pdoUpdate($tableName,array $value,array $where,$str=''){
 //    echo 'data';
 //    exit;
     $sql='UPDATE '.$tableName.' SET ';

@@ -114,8 +114,10 @@ class wechat
         $resultStr=$this->prepareMsg($con);
         return $resultStr;
     }
-    public function prepareToKFMsg($sentTo,$me){
-        $resultStr=$this->prepareMsg(array('MsgType'=>'transfer_customer_service'));
+    public function prepareToKFMsg($kf_account=null){
+        $str =isset($kf_account)? array('MsgType'=>'transfer_customer_service','TransInfo'=>array('KfAccount'=>$kf_account))
+            :array('MsgType'=>'transfer_customer_service');
+        $resultStr=$this->prepareMsg($str);
         return $resultStr;
     }
 
@@ -138,7 +140,7 @@ class wechat
     private function arrayToXml(SimpleXMLElement $xml, array $array){
         foreach ($array as $k => $v) {
             if(is_array($v)){
-                arrayToXml($xml->addChild($k),$v);
+                $this->arrayToXml($xml->addChild($k),$v);
             }else{
                 $xml->addChild($k,$v);
             }
