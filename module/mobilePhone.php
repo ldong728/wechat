@@ -11,8 +11,9 @@ if(count($msg['content'])<10&&count($msg['content'])>0){
     $phoneQuery= new mobilePhoneQuery();
     $response=$phoneQuery->getPrice($msg['content']);
     if($response!='以上报价由慈溪兄弟数码提供，仅供参考，详情请咨询店家'){
-        $response= $weixin->prepareTextMsg($msg['from'],$msg['me'],$response);
-        echo $response;
+//        $response= $weixin->prepareTextMsg($msg['from'],$msg['me'],$response);
+//        echo $response;
+        $weixin->replytext($response);
         exit;
     };
 }

@@ -12,11 +12,14 @@
 <nav align="center">
     <ul>
         <li><a href="../index.php">首页</a></li>
+        <li><a href="moduleConfig.php?modulemenu=1">模块选择与设置</a></li>
+        <li><a href="consle.php?menuManage=1">菜单设置</a> </li>
         <li><a href="consle.php?kfManage=1">客服管理</a></li>
-        <li><a href="consle.php?getNewsEditor=1">编辑图文信息</a></li>
-        <li><a href="consle.php?upload=1&type=voice">上传临时语音</a></li>
-        <li><a href="consle.php?upload=1&type=video">上传临时视频</a></li>
-        <li><a href="consle.php?upload=1&type=thumb">上传临时缩略图</a></li>
-        <li><a href="consle.php?upload=1&type=12">上传错误图片测试</a></li>
+<!--        <li><a href="consle.php?getNewsEditor=1">编辑图文信息</a></li>-->
+<!--        <li><a href="consle.php?upload=1&type=voice">上传临时语音</a></li>-->
+<!--        <li><a href="consle.php?upload=1&type=video">上传临时视频</a></li>-->
+        <li><a href="consle.php?tokenInf="1">公众号接入信息</a></li>
+        <li><a href="consle.php?userInf=1">用户信息</a></li>
+        <li><a href="consle.php?logout=1">退出登录</a></li>
     </ul>
 </nav>

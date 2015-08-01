@@ -2,23 +2,16 @@
 <?php $token = $GLOBALS['token'] ?>
 
 <br/>
-<br/>
-<div>
-<?php echo 'http://'.$_SERVER[HTTP_HOST].'/wechat/index.php?id='.$_SESSION['weixinId']; ?><br/>
-    <?php echo $token; ?>
 
-</div>
-<br/>
-<br/>
 <div>
-    <a href="moduleConfig.php?modulemenu=1">模块选择与设置</a><br/><br/><br/>
-    <a href="consle.php?menu=1">'自定义按钮</a><br/><br/><br/>
-    <a href="/wechatwall/index.php?owner=<?php echo $_SESSION['weixinId']; ?>"> '微信墙</a><br/><br/><br/>
-    <a href="consle.php?modultest=1">'测试</a><br/><br/><br/>
-    <a href="consle.php?getContact=1">'获取获奖者地址</a><br/><br/><br/>
-    <a href="consle.php?edit_gallery=1">'编辑照片墙</a><br/><br/><br/>
-    <a href="consle.php?delete_button=1">'删除自定义按钮</a><br/><br/><br/>
-    <a href="consle.php?logout=1">退出登录</a>
+<!--    <a href="moduleConfig.php?modulemenu=1">模块选择与设置</a><br/><br/><br/>-->
+<!--    <a href="consle.php?menu=1">'自定义按钮</a><br/><br/><br/>-->
+<!--    <a href="/wechatwall/index.php?owner=--><?php //echo $_SESSION['weixinId']; ?><!--"> '微信墙</a><br/><br/><br/>-->
+<!--    <a href="consle.php?modultest=1">'测试</a><br/><br/><br/>-->
+<!--    <a href="consle.php?getContact=1">'获取获奖者地址</a><br/><br/><br/>-->
+<!--    <a href="consle.php?edit_gallery=1">'编辑照片墙</a><br/><br/><br/>-->
+<!--    <a href="consle.php?delete_button=1">'删除自定义按钮</a><br/><br/><br/>-->
+<!--    <a href="consle.php?logout=1">退出登录</a>-->
 </div>
 
 

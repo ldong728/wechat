@@ -12,6 +12,7 @@ class wechat
 {
     public $weixinId='';
     public $msg;
+    private $isReplied=false;
     public function __construct($wxid){
         $this->weixinId=$wxid;
 }
@@ -122,8 +123,11 @@ class wechat
     }
 
     public function replyMsg(array $content){
-        $replyStr=$this->prepareMsg($content);
-        echo $replyStr;
+        if(!$this->isReplied) {
+            $replyStr = $this->prepareMsg($content);
+            echo $replyStr;
+            $this->isReplied=true;
+        }
     }
 
     private function prepareMsg(array $content){
@@ -149,8 +153,11 @@ class wechat
 
     }
     public function replytext($response){
-        $content=array('MsgType'=>'text','Content'=>$response);
-        $this->replyMsg($content);
+        if(!$this->isReplied) {
+            $content = array('MsgType' => 'text', 'Content' => $response);
+            $this->replyMsg($content);
+            $this->isReplied=true;
+        }
     }
 
     public function prepareNewsMsg($sentTo,$me,$newsJson){

@@ -13,6 +13,7 @@ if(isset($_GET['id'])){
         $weixin=new wechat($weixinId);
         $weixin->valid();
         $msg=$weixin->receiverFilter();
+        include_once $mypath.'/module/menuManage.php';
         foreach ($decodeData['dutyContent'] as $row) {
 //            wxlog('include:'.$mypath.'/'.$row);
             $query=pdoQuery('module_config_tbl',array('config'),array('weixin_id'=>$weixinId,'module_path'=>$row),' limit 1');

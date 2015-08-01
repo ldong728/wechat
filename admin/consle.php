@@ -18,6 +18,18 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
 //        echo 'OK';
 //        exit;
 //    }
+
+    if(isset($_GET['menuManage'])){
+
+
+    }
+    if(isset($_GET['tokenInf'])){
+        $query = pdoQuery('user_tbl',array('token'),array('weixin_id'=>$_SESSION['weixinId']),' limit 1');
+        $row=$query->fetch();
+        $token=$row['token'];
+        printView('/admin/view/tokenInf.html.php');
+        exit;
+    }
     if(isset($_GET['getNewsEditor'])){
         $query=pdoQuery('news_tbl',null,array('weixin_id'=>$_SESSION['weixinId']),' limit 20');
         printView('/admin/view/newsEdit.html.php','图文信息编辑');
