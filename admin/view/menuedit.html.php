@@ -1,27 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>自定义菜单</title>
-</head>
 
-<body>
-<?php foreach ($buttonInf as $button): ?>
-    <p><?php echo $button['name'] ?></p>
+
+<div>
+    <a href="?menuManage=1&menuInfo=1">获取菜单信息</a>
+</div>
+
+<div>
+    <a href="?menuManage=1&menuCreate=1">创建菜单</a>
+</div>
+
+<div>
+<!--    --><?php
+//        if(isset($))
+//    ?>
+
+</div>
+<div>
     <?php
-    if (count($button['sub_button']) > 0) {
-        echo '<p>子菜单:</p>';
-        foreach ($button['sub_button']['list'] as $subbutton) {
-            foreach ($subbutton as $k => $v) {
-                echo  '---- '.$k . ':  ' . $v . '</p>';
-            }
+        if(isset($GLOBALS['buttonInf'])){
+            $inf=json_decode($GLOBALS['buttonInf'],true);
+            echo '自定义菜单数据：';
+            echo $GLOBALS['buttonInf'];
+        }else{
         }
-    }else{
-        foreach ($button as $k=>$v) {
-            echo $k . ':  ' . $v . '</p>';
-        }
-    }
+
     ?>
-<?php endforeach ?>
-</body>
-</html>
+</div>
+

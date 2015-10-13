@@ -18,10 +18,20 @@ if(isset($_SESSION['login'])&&$_SESSION['login']) {
 //        echo 'OK';
 //        exit;
 //    }
-
+    //自定义菜单的设置
     if(isset($_GET['menuManage'])){
+        if(isset($_GET['menuInfo'])){
+            $buttonInf=getMenuInf();
+        }
+        if(isset($_GET['menuCreate'])){
+            printView('/admin/view/menuCreater.html.php');
+            exit;
+        }
 
 
+
+        printView('/admin/view/menuedit.html.php');
+        exit;
     }
     if(isset($_GET['tokenInf'])){
         $query = pdoQuery('user_tbl',array('token'),array('weixin_id'=>$_SESSION['weixinId']),' limit 1');

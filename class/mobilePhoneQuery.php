@@ -24,7 +24,7 @@ class mobilePhoneQuery
             $str = substr($str,1,(strpos($str,';')-2));
             $backData = $backData.$row['name']."\n".$str.'： ￥'.intval($row['price'])."\n\n";
         }
-        $backData=$backData.'以上报价由慈溪兄弟数码提供，仅供参考，详情请咨询店家';
+        $backData=$backData.'以上报价由慈溪兄弟数码提供，仅供参考，详情请咨询店家,电话：4000-120-188';
         return $backData;
 
     }

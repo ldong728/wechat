@@ -98,7 +98,7 @@ if (isset($_SESSION['login']) && $_SESSION['login']) {
                 }
 //                $configList['config']=array_intersect_key($configList['config'],$_POST);
                 $configList['config']=array_merge($configList['config'],$_POST,$unchecked);//融合数组，并用差异数组中的值覆盖前者
-                                    $jsonData = addslashes(json_encode($configList,JSON_UNESCAPED_UNICODE));
+                                    $jsonData = addslashes(json_encode($configList,JSON_UNESCAPED_UNICODE));//添加转义符，以便保存入mysql数据库
                     pdoUpdate('module_config_tbl', array('config' => $jsonData), $where);
 
 //                foreach ($_POST as $k => $v) {

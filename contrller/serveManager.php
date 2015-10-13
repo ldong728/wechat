@@ -42,11 +42,21 @@ function createButtonTemp($weixinId = 0)
     echo $response;
 
 }
+//function getButtonInfo(){
+//    $hander=new interfaceHandler($_SESSION['weixinId']);
+//    $response = $hander->getByCurl('https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN');
+//    return $response;
+//}
+
+function getMenuInf()
+{
+    $json = $GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN');
+    return $json;
+}
 
 function creatButton($json)
 {
-    $response = $GLOBALS['mInterFace']->postJsonByCurl('https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN', $json);
-    echo $response;
+
 }
 
 
@@ -103,11 +113,7 @@ function getUnionId($openId, $weixinId = 0)
     return json_decode($jsonData, true);
 }
 
-function getMenuInf()
-{
-    $json = $GLOBALS['mInterface']->getByCurl('https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN');
-    return json_decode($json, true);
-}
+
 
 function getMediaList($type, $offset)
 {
